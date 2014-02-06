@@ -22,6 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="edu.ucsd.placeitapp.MapActivity"
+            android:label="@string/title_activity_map" >
+        </activity>
+        <activity
+            android:name="edu.ucsd.placeitapp.NewPlaceitActivity"
+            android:label="@string/title_activity_new_placeit" >
+        </activity>
+        <activity
+            android:name="edu.ucsd.placeitapp.ListActivity"
+            android:label="@string/title_activity_list" >
+        </activity>
+        <activity
+            android:name="edu.ucsd.placeitapp.DescriptionActivity"
+            android:label="@string/title_activity_description" >
+        </activity>
     </application>
 
 </manifest>
