@@ -38,6 +38,12 @@
             android:name="edu.ucsd.placeitapp.DescriptionActivity"
             android:label="@string/title_activity_description" >
         </activity>
+
+        <receiver
+            android:name="edu.ucsd.placeitapp.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
     </application>
 
 </manifest>
