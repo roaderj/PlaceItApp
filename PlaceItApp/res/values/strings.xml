@@ -8,5 +8,10 @@
     <string name="title_activity_new_placeit">New Place It</string>
     <string name="title_activity_list">List Activity</string>
     <string name="title_activity_description">DescriptionActivity</string>
-
+	<string name="map">Map</string>
+    <string name="list">List</string>  
+    <string name="placeit">Place-It</string>
+    <string name="help">help</string>
+    <string name="back">back</string>
+      
 </resources>
