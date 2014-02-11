@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 
 public class MainActivity extends Activity {
+	public final static String PLACEIT_ID = "edu.ucsd.placeitapp.PLACEIT_ID"; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
