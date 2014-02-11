@@ -2,7 +2,9 @@ package edu.ucsd.placeitapp;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 
 public class MapActivity extends Activity {
 
@@ -18,5 +20,8 @@ public class MapActivity extends Activity {
 		getMenuInflater().inflate(R.menu.map, menu);
 		return true;
 	}
-
+	
+	public void back(View view) {
+		finish();
+	}
 }

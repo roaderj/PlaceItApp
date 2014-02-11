@@ -3,6 +3,7 @@ package edu.ucsd.placeitapp;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.View;
 
 public class ListActivity extends Activity {
 
@@ -19,4 +20,7 @@ public class ListActivity extends Activity {
 		return true;
 	}
 
+	public void back(View view) {
+		finish();
+	}
 }

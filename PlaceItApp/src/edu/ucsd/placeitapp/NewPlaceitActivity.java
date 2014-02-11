@@ -3,6 +3,7 @@ package edu.ucsd.placeitapp;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.View;
 
 public class NewPlaceitActivity extends Activity {
 
@@ -18,5 +19,8 @@ public class NewPlaceitActivity extends Activity {
 		getMenuInflater().inflate(R.menu.new_placeit, menu);
 		return true;
 	}
-
+	
+	public void back(View view) {
+		finish();
+	}
 }

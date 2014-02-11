@@ -25,7 +25,8 @@
         android:layout_alignLeft="@+id/button2"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="43dp"
-        android:text="@string/map" />
+        android:text="@string/map" 
+        android:onClick="goToMap" />
 
     <Button
         android:id="@+id/button3"
@@ -42,6 +43,7 @@
         android:layout_below="@+id/button1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
-        android:text="@string/list" />
+        android:text="@string/list"
+        android:onClick="goToList" />
 
 </RelativeLayout>
