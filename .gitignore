@@ -1,5 +1,5 @@
 # localization files 
-*.DS_Store 
+.DS_Store 
 
 # generated files 
 bin/ 
