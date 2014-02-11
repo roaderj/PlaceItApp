@@ -13,5 +13,12 @@
     <string name="placeit">Place-It</string>
     <string name="help">help</string>
     <string name="back">back</string>
-      
+    <string name="newplaceit">New Place-It</string>
+    <string name="name">Name:</string>
+    <string name="description">Description:</string>	
+    <string name="create">Create</string>
+    <string name="schedule">Schedule：</string>
+    <string name="enterDes">Enter Description</string>
+    <string name="enterNam">Enter Name</string>
+    <string name="weeks"># of weeks</string>
 </resources>
