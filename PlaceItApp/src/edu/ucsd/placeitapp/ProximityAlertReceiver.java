@@ -22,7 +22,7 @@ public class ProximityAlertReceiver extends BroadcastReceiver {
 		Log.w("ProximityAlertReceiver", new String("Placeit #" + pID + " was triggered.")); 
 
 		PlaceIt placeit = PlaceIt.find(pID); 
-		PlaceItNotification.notify(context, placeit.getTitle(), placeit.getDescription(), pID); 
+		//PlaceItNotification.notify(context, placeit.getTitle(), placeit.getDescription(), pID); 
 		/* 
 		NotificationCompat.Builder builder =
 				new NotificationCompat.Builder(context); 

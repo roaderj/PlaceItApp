@@ -1,6 +1,7 @@
 package edu.ucsd.placeitapp;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import android.R.string;
@@ -11,76 +12,107 @@ public class PlaceIt {
 	private string title;
 	private string description;
 	private Location location;
-	private Date starttime;
+	private Timestamp startTime;
 	private boolean isRecurring;
+	private int recurringIntervalWeeks;
 	private boolean isEnabled;
-	private int recurringIntervalWeek;
-		
-	public PlaceIt(string tit, string des, Location loc) {
-		title = tit;
-		description = des;
-		location = loc;	
-		//TODO
+
+	public PlaceIt(string title, string description, Location location,
+			Timestamp startTime, boolean isRecurring,
+			int recurringIntervalWeeks, boolean isEnabled) {
+		this.id = -1;
+		this.title = title;
+		this.description = description;
+		this.location = location;
+		this.startTime = startTime;
+		this.isEnabled = isEnabled;
+		this.isRecurring = isRecurring;
+		this.recurringIntervalWeeks = recurringIntervalWeeks;
 	}
+
+	public PlaceIt(string title, string description, Location location,
+			Timestamp startTime, boolean isRecurring, int recurringIntervalWeeks) {
+		this(title, description, location, startTime, isRecurring,
+				recurringIntervalWeeks, false);
+	}
+
+	public PlaceIt(string title, string description, Location location) {
+		this(title, description, location, new Timestamp(new Date().getTime()),
+				false, -1);
+	}
+
 	public int getId() {
-		return id;
+		return this.id;
 	}
-	public void setId(int x) {
-		id = x;
-	}
+
 	public string getTitle() {
-		return title;
+		return this.title;
 	}
-	public void setTitle(string tit) {
-		title = tit;
+
+	public void setTitle(string title) {
+		this.title = title;
 	}
+
 	public string getDescription() {
-		return description;
+		return this.description;
 	}
-	public void setDescription(string des) {
-		description = des;
+
+	public void setDescription(string description) {
+		this.description = description;
 	}
+
 	public Location getLocation() {
-		return location;
+		return this.location;
 	}
-	public void setLocation(Location loc) {
-		location = loc;
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
-	public Date getStarttime() {
-		return starttime;
+
+	public Timestamp getStartTime() {
+		return this.startTime;
 	}
-	public void setStarttime(Date st) {
-		starttime = st;
+
+	public void setStarttime(Timestamp startTime) {
+		this.startTime = startTime;
 	}
+
 	public boolean isRecurring() {
-		return isRecurring;
+		return this.isRecurring;
 	}
-	public void setRecurring(int riw) {
-		isRecurring = true;
-		recurringIntervalWeek = riw;
+
+	public void setRecurring(boolean isRecurring) {
+		this.isRecurring = isRecurring;
 	}
+
+	public void setRecurringIntervalWeeks(int recurringIntervalWeeks) {
+		this.recurringIntervalWeeks = recurringIntervalWeeks;
+	}
+
 	public boolean isEnabled() {
-		//TODO
-		return isEnabled;
+		return this.isEnabled;
 	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
 	public void save() {
-		//TODO
+		
+		// TODO
 	}
-	public static PlaceIt find(int id) {
-		//TODO
-		return null;
-	}
-	public static List<PlaceIt> all() {
-		//TODO
-		return null;
-	}
-	public void repost() {
-		//TODO
-	}
+
 	public void discard() {
-		//TODO
+		// TODO
 	}
-	public void setEnabled() {
-		//TODO
+
+	public static PlaceIt find(int id) {
+		// TODO
+		return null;
+	}
+
+	public static List<PlaceIt> all() {
+		// TODO
+		return null;
 	}
 }

@@ -139,7 +139,6 @@ public class PlaceItNotification {
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
 			nm.notify(NOTIFICATION_TAG, 0, notification);
-			nm.notif
 		} else {
 			nm.notify(NOTIFICATION_TAG.hashCode(), notification);
 		}
