@@ -21,14 +21,18 @@ public class AlarmReceiver extends BroadcastReceiver {
 		if (pID == -1) {
 			throw new RuntimeException("AlarmReceiver used incorrectly."); 
 		}
-		Log.w("AlarmReceiver", new String("Placeit #" + pID + " is now enabled.")); 
-		PlaceIt placeit = PlaceIt.find(pID); 
+		Log.w("AlarmReceiver", new String("Placeit #" + pID + " is now enabled."));
 		
+		
+		PlaceIt placeit = PlaceIt.find(pID); 
 		// TODO: Modify placeit startTime 
 		
 		LocationManager locManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		
-		//PlaceItNotification.notify(context, exampleString, number); 
+		Intent locationIntent = new Intent(context, ProximityAlertReceiver.class); 
+		locationIntent.putExtra(MainActivity.PLACEIT_ID, pID); 
+		PendingIntent pIntent = PendingIntent.getBroadcast(context, requestCode, locationIntent, 0); 
+		//locManager.addProximityAlert(latitude, longitude, radius, expiration, intent); 
 	}
 	
 }
