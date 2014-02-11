@@ -6,7 +6,7 @@ import java.util.List;
 import android.R.string;
 import android.location.Location;
 
-public class placeit {
+public class PlaceIt {
 	private int id;
 	private string title;
 	private string description;
@@ -15,8 +15,8 @@ public class placeit {
 	private boolean isRecurring;
 	private boolean isEnabled;
 	private int recurringIntervalWeek;
-	
-	public placeit(string tit, string des, Location loc) {
+		
+	public PlaceIt(string tit, string des, Location loc) {
 		title = tit;
 		description = des;
 		location = loc;	
@@ -66,11 +66,11 @@ public class placeit {
 	public void save() {
 		//TODO
 	}
-	public static placeit find(int id) {
+	public static PlaceIt find(int id) {
 		//TODO
 		return null;
 	}
-	public static List<placeit> all() {
+	public static List<PlaceIt> all() {
 		//TODO
 		return null;
 	}
