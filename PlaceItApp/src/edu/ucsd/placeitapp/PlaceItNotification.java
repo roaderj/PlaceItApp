@@ -4,63 +4,61 @@ import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
- * Helper class for showing and canceling place it notifications.
- * <p>
- * This class makes heavy use of the {@link NotificationCompat.Builder} helper
- * class to create notifications in a backward-compatible way.
+ * Class for showing/canceling notifications, and handling 
+ * managing the actions specified by the notification including
+ * 
+ * 1) clicking the notification
+ * 2) clicking the repost action
+ * 3) clicking the discard action
+ * 4) clearing the notification
  */
-public class PlaceItNotification {
-	/**
-	 * The unique identifier for this type of notification.
-	 */
-	private static final String NOTIFICATION_TAG = "PlaceIt";
+public class PlaceItNotification extends BroadcastReceiver {
+	
+	/** The unique identifier for this type of notification. */
+	private static final String NOTIFICATION_TAG = "edu.ucsd.PlaceItApp.PlaceIt";
+	
+	/** Identifier for intent extras. */
+	private static final String BUTTON_TAG = "edu.ucsd.PlaceItApp.Button";
 
 	/**
-	 * Shows the notification, or updates a previously shown notification of
-	 * this type, with the given parameters.
-
-	 * TODO: Customize the contents of this method to tweak the behavior and
-	 * presentation of place it notifications. Make sure to follow the <a
-	 * href="https://developer.android.com/design/patterns/notifications.html">
-	 * Notification design guidelines</a> when doing so.
-	 * 
+	 * Shows the notification with repost and discard options. 
+	 * Multiple Place-its listed as separate notifications. 
 	 */
 	public static void notify(final Context context, final int pID) {
 		final Resources res = context.getResources();
 
-		//PlaceIt placeit = PlaceIt.find(pID); 
-		//final String name = placeit.getTitle().toString(); 
-		//final String description = placeit.getDescription().toString();
-		
-		final String title = "Go to market"; //temp 
-		final String description = "Pick up groceries."; // temp
-		
+		// PlaceIt placeit = PlaceIt.find(pID);
+		// final String name = placeit.getTitle().toString();
+		// final String description = placeit.getDescription().toString();
+		final String title = "Go to market"; // Temporary
+		final String description = "Pick up groceries."; // Temporary
+
 		final String fullTitle = res.getString(
 				R.string.place_it_notification_title_template, title);
 		final String fullDescription = res.getString(
-				R.string.place_it_notification_text_template,
-				description);
+				R.string.place_it_notification_text_template, description);
 
-		final NotificationManager manager = (NotificationManager) 
-				context.getSystemService(Context.NOTIFICATION_SERVICE); 
-		
+		final NotificationManager manager = (NotificationManager) context
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+
 		final NotificationCompat.Builder builder = new NotificationCompat.Builder(
 				context)
 
 				// Set appropriate defaults for the notification light, sound,
 				// and vibration.
 				.setDefaults(Notification.DEFAULT_ALL)
-				
+
 				// required values
 				.setSmallIcon(R.drawable.ic_launcher)
 				.setContentTitle(fullTitle)
@@ -71,39 +69,62 @@ public class PlaceItNotification {
 				// Set preview information for this notification.
 				.setTicker(title)
 
-				// Show a number. 
-				.setNumber(pID) //temp
-
-				// On click action
+				// On click action go to DescriptionActivity
 				.setContentIntent(
-						PendingIntent.getActivity(
-								context,
-								0,
-								new Intent(context, DescriptionActivity.class)
-									.putExtra(MainActivity.PLACEIT_ID, pID),
+						PendingIntent.getActivity(context, 0, new Intent(
+								context, DescriptionActivity.class).putExtra(
+								MainActivity.PLACEIT_ID, pID),
 								PendingIntent.FLAG_UPDATE_CURRENT))
 
 				// Repost action
-				.addAction(R.drawable.ic_stat_repost,
-						res.getString(R.string.notification_repost), null)
-					
+				.addAction(
+						R.drawable.ic_stat_repost,
+						res.getString(R.string.notification_repost),
+						PendingIntent
+								.getBroadcast(
+										context,
+										0,
+										new Intent(context,
+												PlaceItNotification.class)
+												.putExtra(
+														BUTTON_TAG,
+														R.string.notification_repost)
+												.putExtra(
+														MainActivity.PLACEIT_ID,
+														pID),
+										PendingIntent.FLAG_UPDATE_CURRENT))
+
 				// Discard action
-				.addAction(R.drawable.ic_stat_discard,
-						res.getString(R.string.notification_discard), null)
+				.addAction(
+						R.drawable.ic_stat_discard,
+						res.getString(R.string.notification_discard),
+						PendingIntent
+								.getBroadcast(
+										context,
+										0,
+										new Intent(context,
+												PlaceItNotification.class)
+												.putExtra(
+														BUTTON_TAG,
+														R.string.notification_discard)
+												.putExtra(
+														MainActivity.PLACEIT_ID,
+														pID),
+										PendingIntent.FLAG_UPDATE_CURRENT))
 
 				// Automatically dismiss the notification when it is touched.
 				.setAutoCancel(true);
 
-		notify(context, builder.build());
+		notify(context, builder.build(), pID);
 	}
 
 	@TargetApi(Build.VERSION_CODES.ECLAIR)
 	private static void notify(final Context context,
-			final Notification notification) {
+			final Notification notification, int pID) {
 		final NotificationManager nm = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-			nm.notify(NOTIFICATION_TAG, 0, notification);
+			nm.notify(NOTIFICATION_TAG, pID, notification);
 		} else {
 			nm.notify(NOTIFICATION_TAG.hashCode(), notification);
 		}
@@ -114,13 +135,47 @@ public class PlaceItNotification {
 	 * {@link #notify(Context, String, int)}.
 	 */
 	@TargetApi(Build.VERSION_CODES.ECLAIR)
-	public static void cancel(final Context context) {
+	public static void cancel(final Context context, int pID) {
 		final NotificationManager nm = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-			nm.cancel(NOTIFICATION_TAG, 0);
+			nm.cancel(NOTIFICATION_TAG, pID);
 		} else {
 			nm.cancel(NOTIFICATION_TAG.hashCode());
 		}
 	}
+
+	@Override
+	public void onReceive(Context context, Intent intent) {
+
+		Bundle bundle = intent.getExtras();
+
+		int pID;
+		if ((pID = bundle.getInt(MainActivity.PLACEIT_ID, -1)) == -1)
+			throw new RuntimeException("Notification not used correctly");
+
+		if (bundle.get(BUTTON_TAG).equals(R.string.notification_discard))
+			discard(context, pID);
+		else if (bundle.get(BUTTON_TAG).equals(R.string.notification_repost))
+			repost(context, pID);
+		else
+			Log.d("Notification", "Not working");
+		// throw new RuntimeException("Notification not used correctly");
+	}
+
+	private void discard(Context context, int pID) {
+		PlaceItNotification.cancel(context, pID);
+		Log.w("Notification", "Place it discarded");
+		Toast.makeText(context, "Place-it discarded.", Toast.LENGTH_LONG)
+				.show();
+		// TODO: Actually discarding Place-it
+	}
+
+	private void repost(Context context, int pID) {
+		PlaceItNotification.cancel(context, pID);
+		Log.w("Notification", "Place it discarded");
+		Toast.makeText(context, "Place-it reposted.", Toast.LENGTH_LONG).show();
+		// TODO: Actually reposting Place-it
+	}
+
 }
