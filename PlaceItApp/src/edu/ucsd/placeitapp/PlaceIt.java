@@ -4,20 +4,19 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import android.R.string;
 import android.location.Location;
 
 public class PlaceIt {
 	private int id;
-	private string title;
-	private string description;
+	private String title;
+	private String description;
 	private Location location;
 	private Timestamp startTime;
 	private boolean isRecurring;
 	private int recurringIntervalWeeks;
 	private boolean isEnabled;
 
-	public PlaceIt(string title, string description, Location location,
+	public PlaceIt(String title, String description, Location location,
 			Timestamp startTime, boolean isRecurring,
 			int recurringIntervalWeeks, boolean isEnabled) {
 		this.id = -1;
@@ -30,13 +29,13 @@ public class PlaceIt {
 		this.recurringIntervalWeeks = recurringIntervalWeeks;
 	}
 
-	public PlaceIt(string title, string description, Location location,
+	public PlaceIt(String title, String description, Location location,
 			Timestamp startTime, boolean isRecurring, int recurringIntervalWeeks) {
 		this(title, description, location, startTime, isRecurring,
 				recurringIntervalWeeks, false);
 	}
 
-	public PlaceIt(string title, string description, Location location) {
+	public PlaceIt(String title, String description, Location location) {
 		this(title, description, location, new Timestamp(new Date().getTime()),
 				false, -1);
 	}
@@ -45,19 +44,19 @@ public class PlaceIt {
 		return this.id;
 	}
 
-	public string getTitle() {
+	public String getTitle() {
 		return this.title;
 	}
 
-	public void setTitle(string title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	public string getDescription() {
+	public String getDescription() {
 		return this.description;
 	}
 
-	public void setDescription(string description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -102,7 +101,7 @@ public class PlaceIt {
 		// TODO
 	}
 
-	public void discard() {
+	public void delete() {
 		// TODO
 	}
 
