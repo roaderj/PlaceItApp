@@ -20,8 +20,4 @@ public class MapActivity extends Activity {
 		getMenuInflater().inflate(R.menu.map, menu);
 		return true;
 	}
-	
-	public void back(View view) {
-		finish();
-	}
 }
