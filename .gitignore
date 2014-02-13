@@ -8,3 +8,6 @@ gen/
 # Project files
 .project
 .classpath
+
+# API keys 
+api_keys.xml
