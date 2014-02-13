@@ -9,7 +9,7 @@
     tools:context=".NewPlaceitActivity" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -18,33 +18,24 @@
         android:text="@string/back" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewNewPlaceIt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
+        android:layout_alignBaseline="@+id/buttonBack"
+        android:layout_alignBottom="@+id/buttonBack"
         android:layout_centerHorizontal="true"
         android:textSize="23sp"
         android:text="@string/newplaceit" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_below="@+id/button1"
+        android:layout_alignRight="@+id/textViewDes"
+        android:layout_below="@+id/buttonBack"
         android:layout_marginTop="24dp"
         android:textSize="20sp"
         android:text="@string/name" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="createPlaceIt"
-        android:text="@string/create" />
 
     <EditText
         android:id="@+id/editDes"
@@ -52,14 +43,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/editTime"
         android:layout_alignLeft="@+id/editName"
-        android:layout_alignTop="@+id/textView3"
+        android:layout_below="@+id/editName"
         android:hint="@string/enterDes" >
 
         <requestFocus />
     </EditText>
 
     <CheckBox
-        android:id="@+id/checkBox1"
+        android:id="@+id/checkBoxSch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView4"
@@ -71,7 +62,7 @@
         android:id="@+id/editTime"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/checkBox1"
+        android:layout_alignTop="@+id/checkBoxSch"
         android:layout_toRightOf="@+id/textView4"
         android:hint="@string/weeks"
         android:inputType="number" />
@@ -81,30 +72,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button2"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/textViewName"
         android:layout_marginBottom="18dp"
         android:text="@string/schedule"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="14dp"
-        android:text="@string/description"
         android:textSize="20sp" />
 
     <EditText
         android:id="@+id/editName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignBaseline="@+id/textViewName"
+        android:layout_alignBottom="@+id/textViewName"
         android:layout_alignRight="@+id/editTime"
-        android:layout_toRightOf="@+id/textView2"
+        android:layout_toRightOf="@+id/textViewName"
         android:ems="10"
         android:hint="@string/enterNam" />
+
+    <TextView
+        android:id="@+id/textViewDes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonBack"
+        android:layout_centerVertical="true"
+        android:text="@string/description"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editDes"
+        android:layout_alignParentBottom="true"
+        android:onClick="createPlaceIt"
+        android:text="@string/create" />
 
 </RelativeLayout>
