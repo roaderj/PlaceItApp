@@ -5,6 +5,3 @@
 bin/ 
 gen/
 
-# Project files
-.project
-.classpath
