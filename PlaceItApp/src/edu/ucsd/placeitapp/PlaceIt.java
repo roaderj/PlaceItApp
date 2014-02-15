@@ -16,10 +16,10 @@ public class PlaceIt {
 	private int recurringIntervalWeeks;
 	private boolean isEnabled;
 
-	public PlaceIt(String title, String description, Location location,
+	public PlaceIt(int id, String title, String description, Location location,
 			Timestamp startTime, boolean isRecurring,
 			int recurringIntervalWeeks, boolean isEnabled) {
-		this.id = -1;
+		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.location = location;
@@ -31,7 +31,7 @@ public class PlaceIt {
 
 	public PlaceIt(String title, String description, Location location,
 			Timestamp startTime, boolean isRecurring, int recurringIntervalWeeks) {
-		this(title, description, location, startTime, isRecurring,
+		this(-1, title, description, location, startTime, isRecurring,
 				recurringIntervalWeeks, false);
 	}
 
@@ -106,12 +106,10 @@ public class PlaceIt {
 	}
 
 	public static PlaceIt find(int id) {
-		// TODO
-		return null;
+		return PlaceItDBHelper.getInstance().find(id);
 	}
 
 	public static List<PlaceIt> all() {
-		// TODO
-		return null;
+		return PlaceItDBHelper.getInstance().all();
 	}
 }
