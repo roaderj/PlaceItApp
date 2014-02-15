@@ -1,5 +1,7 @@
 package edu.ucsd.placeitapp.test;
 
+import java.util.List;
+
 import android.location.Location;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
@@ -22,7 +24,7 @@ public class PlaceItTest extends AndroidTestCase {
 	}
 
 	public void testSave() {
-		for (int i = 1; i < 100; ++i) {
+		for (int i = 1; i <= 100; ++i) {
 			PlaceIt placeIt = new PlaceIt("Test Title", "Test Description",
 					this.placeIt.getLocation());
 			assertEquals(placeIt.getId(), -1);
@@ -55,13 +57,13 @@ public class PlaceItTest extends AndroidTestCase {
 	}
 
 	public void testFind() {
-		for (int i = 1; i < 100; ++i) {
+		for (int i = 1; i <= 100; ++i) {
 			PlaceIt placeIt = new PlaceIt("Test Title", "Test Description",
 					this.placeIt.getLocation());
 			placeIt.save();
 		}
 
-		for (int i = 1; i < 100; ++i) {
+		for (int i = 1; i <= 100; ++i) {
 			PlaceIt placeIt = PlaceIt.find(i);
 			assertEquals(placeIt.getId(), i);
 		}
@@ -74,5 +76,19 @@ public class PlaceItTest extends AndroidTestCase {
 
 	public void testDelete() {
 
+	}
+
+	public void testAll() {
+		for (int i = 1; i <= 100; ++i) {
+			PlaceIt placeIt = new PlaceIt("Test Title", "Test Description",
+					this.placeIt.getLocation());
+			placeIt.save();
+		}
+		
+		List<PlaceIt> placeIts = PlaceIt.all();
+		assertEquals(placeIts.size(), 100);
+		for (int i = 0; i < placeIts.size(); ++i) {
+			assertEquals(placeIts.get(i).getId(), i + 1);
+		}
 	}
 }
