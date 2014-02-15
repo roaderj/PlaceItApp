@@ -16,13 +16,31 @@
         android:layout_alignParentTop="true"
         android:onClick="back"
         android:text="@string/back" />
+    
+    <Button
+        android:id="@+id/buttonCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="createPlaceIt"
+        android:text="@string/create" />
+    
+    <TextView
+        android:id="@+id/textViewDes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/buttonBack"
+        android:layout_centerVertical="true"
+        android:text="@string/description"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textViewNewPlaceIt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buttonBack"
-        android:layout_alignBottom="@+id/buttonBack"
+        android:layout_alignBaseline="@id/buttonBack"
+        android:layout_alignBottom="@id/buttonBack"
         android:layout_centerHorizontal="true"
         android:textSize="23sp"
         android:text="@string/newplaceit" />
@@ -31,79 +49,69 @@
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textViewDes"
-        android:layout_below="@+id/buttonBack"
+        android:layout_alignRight="@id/textViewDes"
+        android:layout_below="@id/buttonBack"
         android:layout_marginTop="24dp"
         android:textSize="20sp"
         android:text="@string/name" />
+    
+    <TextView
+        android:id="@+id/textViewSch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttonCreate"
+        android:layout_alignLeft="@id/textViewName"
+        android:layout_marginBottom="18dp"
+        android:text="@string/schedule"
+        android:textSize="20sp" />
+    
+    <CheckBox
+        android:id="@+id/checkBoxSch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/textViewSch"
+        android:layout_toLeftOf="@id/textViewSch"
+        android:layout_marginRight="5dp"
+        android:checked="false" />
+    
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/textViewName"
+        android:layout_alignBottom="@id/textViewName"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/textViewName"
+        android:textSize="20sp"
+        android:hint="@string/enterNam" />
+    
+    <EditText
+        android:id="@+id/editTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/textViewSch"
+        android:layout_toRightOf="@id/textViewSch"
+        android:textSize="20sp"
+        android:hint="@string/weeks"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/editDes"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editTime"
-        android:layout_alignLeft="@+id/editName"
-        android:layout_below="@+id/editName"
-        android:hint="@string/enterDes" >
-
-        <requestFocus />
-    </EditText>
-
-    <CheckBox
-        android:id="@+id/checkBoxSch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView4"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_toLeftOf="@+id/textView4"
-        android:checked="false" />
-
-    <EditText
-        android:id="@+id/editTime"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/checkBoxSch"
-        android:layout_toRightOf="@+id/textView4"
-        android:hint="@string/weeks"
-        android:inputType="number" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
-        android:layout_alignLeft="@+id/textViewName"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/textViewName"
+        android:layout_above="@id/textViewSch"
+        android:layout_toRightOf="@id/textViewDes"
+        android:layout_marginTop="18dp"
         android:layout_marginBottom="18dp"
-        android:text="@string/schedule"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:hint="@string/enterDes" />
 
-    <EditText
-        android:id="@+id/editName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewName"
-        android:layout_alignBottom="@+id/textViewName"
-        android:layout_alignRight="@+id/editTime"
-        android:layout_toRightOf="@+id/textViewName"
-        android:ems="10"
-        android:hint="@string/enterNam" />
 
-    <TextView
-        android:id="@+id/textViewDes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonBack"
-        android:layout_centerVertical="true"
-        android:text="@string/description"
-        android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editDes"
-        android:layout_alignParentBottom="true"
-        android:onClick="createPlaceIt"
-        android:text="@string/create" />
+
+
+
 
 </RelativeLayout>

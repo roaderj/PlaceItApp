@@ -97,7 +97,7 @@ public class PlaceItDBHelper extends SQLiteOpenHelper {
 		Cursor cursor = db.query(PLACEIT_TABLE_NAME, null,
 				PLACEIT_ID_COLUMN_NAME + "=" + Integer.toString(id), null,
 				null, null, null);
-		
+
 		if (cursor.getCount() == 0) {
 			return null;
 		} else {
@@ -123,32 +123,45 @@ public class PlaceItDBHelper extends SQLiteOpenHelper {
 		return placeIts;
 	}
 
+	public boolean delete(PlaceIt placeIt) {
+		SQLiteDatabase db = getWritableDatabase();
+		int rowsAffected = db.delete(PLACEIT_TABLE_NAME, 
+				PLACEIT_ID_COLUMN_NAME + "=?", 
+				new String[] { Integer.toString(placeIt.getId()) });
+		return (rowsAffected == 1);
+	}
+
 	public int save(PlaceIt placeIt) {
 		ContentValues placeItValues = new ContentValues();
 		placeItValues.put(PLACEIT_TITLE_COLUMN_NAME, placeIt.getTitle());
-		placeItValues.put(PLACEIT_DESCRIPTION_COLUMN_NAME, placeIt.getDescription());
-		placeItValues.put(PLACEIT_LATITUDE_COLUMN_NAME, placeIt.getLocation().getLatitude());
-		placeItValues.put(PLACEIT_LONGITUDE_COLUMN_NAME, placeIt.getLocation().getLongitude());
-		placeItValues.put(PLACEIT_START_TIME_COLUMN_NAME, placeIt.getStartTime().getTime());
+		placeItValues.put(PLACEIT_DESCRIPTION_COLUMN_NAME,
+				placeIt.getDescription());
+		placeItValues.put(PLACEIT_LATITUDE_COLUMN_NAME, placeIt.getLocation()
+				.getLatitude());
+		placeItValues.put(PLACEIT_LONGITUDE_COLUMN_NAME, placeIt.getLocation()
+				.getLongitude());
+		placeItValues.put(PLACEIT_START_TIME_COLUMN_NAME, placeIt
+				.getStartTime().getTime());
 		placeItValues.put(PLACEIT_IS_ENABLED_COLUMN_NAME, placeIt.isEnabled());
-		placeItValues.put(PLACEIT_IS_RECURRING_COLUMN_NAME, placeIt.isRecurring());
-		placeItValues.put(PLACEIT_RECURRING_INTERVAL_WEEKS_COLUMN_NAME, placeIt.getRecurringIntervalWeeks());
-		
+		placeItValues.put(PLACEIT_IS_RECURRING_COLUMN_NAME,
+				placeIt.isRecurring());
+		placeItValues.put(PLACEIT_RECURRING_INTERVAL_WEEKS_COLUMN_NAME,
+				placeIt.getRecurringIntervalWeeks());
+
 		SQLiteDatabase db = getWritableDatabase();
 		int id = placeIt.getId();
 		if (exists(id) == true) {
 			db = getWritableDatabase();
-			int rowsAffected = db.update(PLACEIT_TABLE_NAME, 
-					placeItValues, 
-					PLACEIT_ID_COLUMN_NAME + "=?", 
+			int rowsAffected = db.update(PLACEIT_TABLE_NAME, placeItValues,
+					PLACEIT_ID_COLUMN_NAME + "=?",
 					new String[] { Integer.toString(id) });
 			if (rowsAffected != 1) {
 				id /= 0;
 			}
 		} else {
-			id = (int)db.insert(PLACEIT_TABLE_NAME, null, placeItValues);
+			id = (int) db.insert(PLACEIT_TABLE_NAME, null, placeItValues);
 		}
-		
+
 		return id;
 	}
 

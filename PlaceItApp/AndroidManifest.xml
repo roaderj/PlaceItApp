@@ -73,7 +73,7 @@
         <!-- Kenny's API Key -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="@string/GoogleMapsKey" />
+            android:value="AIzaSyDVh_x_ckJ6ekK7MF5HeCmrI2AjMp2Y" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

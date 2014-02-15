@@ -105,7 +105,8 @@ public class PlaceIt {
 	}
 
 	public void delete() {
-		// TODO
+		PlaceItDBHelper.getInstance().delete(this);
+		this.id = -1;
 	}
 
 	public static PlaceIt find(int id) {
