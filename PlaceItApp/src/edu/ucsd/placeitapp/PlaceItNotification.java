@@ -15,42 +15,35 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * Class for showing/canceling notifications, and handling 
- * managing the actions specified by the notification including
+ * Class for showing/canceling notifications, and handling managing the actions
+ * specified by the notification including
  * 
- * 1) clicking the notification
- * 2) clicking the repost action
- * 3) clicking the discard action
- * 4) clearing the notification
+ * 1) clicking the notification 2) clicking the repost action 3) clicking the
+ * discard action 4) clearing the notification
  */
 public class PlaceItNotification extends BroadcastReceiver {
-	
+
 	/** The unique identifier for this type of notification. */
 	private static final String NOTIFICATION_TAG = "edu.ucsd.PlaceItApp.PlaceIt";
-	
-	/** Identifier for intent extras. */
+
+	/** Identifier for notification action extras. */
 	private static final String BUTTON_TAG = "edu.ucsd.PlaceItApp.Button";
 
 	/**
-	 * Shows the notification with repost and discard options. 
-	 * Multiple Place-its listed as separate notifications. 
+	 * Shows the notification with repost and discard options. Multiple
+	 * Place-its listed as separate notifications.
 	 */
 	public static void notify(final Context context, final int pID) {
 		final Resources res = context.getResources();
 
-		// PlaceIt placeit = PlaceIt.find(pID);
-		// final String name = placeit.getTitle().toString();
-		// final String description = placeit.getDescription().toString();
-		final String title = "Go to market"; // Temporary
-		final String description = "Pick up groceries."; // Temporary
+		PlaceIt placeIt = PlaceIt.find(pID);
+		final String title = placeIt.getTitle();
+		final String description = placeIt.getDescription();
 
 		final String fullTitle = res.getString(
 				R.string.place_it_notification_title_template, title);
 		final String fullDescription = res.getString(
 				R.string.place_it_notification_text_template, description);
-
-		final NotificationManager manager = (NotificationManager) context
-				.getSystemService(Context.NOTIFICATION_SERVICE);
 
 		final NotificationCompat.Builder builder = new NotificationCompat.Builder(
 				context)
@@ -61,10 +54,7 @@ public class PlaceItNotification extends BroadcastReceiver {
 
 				// required values
 				.setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle(fullTitle)
-				.setContentText(fullDescription)
-
-				.setPriority(NotificationCompat.PRIORITY_DEFAULT)
+				.setContentTitle(fullTitle).setContentText(fullDescription)
 
 				// Set preview information for this notification.
 				.setTicker(title)
@@ -147,34 +137,34 @@ public class PlaceItNotification extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-
 		Bundle bundle = intent.getExtras();
 
 		int pID;
-		if ((pID = bundle.getInt(MainActivity.PLACEIT_ID, -1)) == -1)
+		if ((pID = bundle.getInt(MainActivity.PLACEIT_ID, -1)) == -1) 
+			//pID extra not found
 			throw new RuntimeException("Notification not used correctly");
 
 		if (bundle.get(BUTTON_TAG).equals(R.string.notification_discard))
-			discard(context, pID);
+			discardAction(context, pID);
 		else if (bundle.get(BUTTON_TAG).equals(R.string.notification_repost))
-			repost(context, pID);
+			repostAction(context, pID);
 		else
-			Log.d("Notification", "Not working");
-		// throw new RuntimeException("Notification not used correctly");
+			throw new RuntimeException("Notification not used correctly");
 	}
 
-	private void discard(Context context, int pID) {
+	private void discardAction(Context context, int pID) {
 		PlaceItNotification.cancel(context, pID);
 		Log.w("Notification", "Place it discarded");
-		Toast.makeText(context, "Place-it discarded.", Toast.LENGTH_LONG)
-				.show();
+		Toast.makeText(context, "Place-it discarded.", Toast.LENGTH_LONG).show();
+
 		// TODO: Actually discarding Place-it
 	}
 
-	private void repost(Context context, int pID) {
+	private void repostAction(Context context, int pID) {
 		PlaceItNotification.cancel(context, pID);
 		Log.w("Notification", "Place it discarded");
 		Toast.makeText(context, "Place-it reposted.", Toast.LENGTH_LONG).show();
+		
 		// TODO: Actually reposting Place-it
 	}
 
