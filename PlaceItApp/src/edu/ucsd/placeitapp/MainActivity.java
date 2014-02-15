@@ -1,7 +1,9 @@
 package edu.ucsd.placeitapp;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -15,6 +17,30 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		PlaceItDBHelper.setInstance(this.getApplicationContext());
+		
+		PlaceIt loadedPlaceIt = PlaceIt.find(5);
+		AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+		if (loadedPlaceIt == null) {
+
+			dlgAlert.setMessage("PlaceIt not found. Creating place it...: ");
+			dlgAlert.setTitle("App Title");
+			dlgAlert.setPositiveButton("OK", null);
+			dlgAlert.setCancelable(true);
+			dlgAlert.create().show();
+			
+
+			Location location = new Location("network");
+			location.setLatitude(100);
+			location.setLongitude(100);
+			PlaceIt somePlaceIt = new PlaceIt("someName", "someDescription", location);
+			somePlaceIt.save();
+		} else {
+			dlgAlert.setMessage("PlaceIt instantiated: " + loadedPlaceIt.getTitle() + " with id: " + loadedPlaceIt.getId());
+			dlgAlert.setTitle("App Title2");
+			dlgAlert.setPositiveButton("OK", null);
+			dlgAlert.setCancelable(true);
+			dlgAlert.create().show();
+		}
 	}
 
 	@Override
