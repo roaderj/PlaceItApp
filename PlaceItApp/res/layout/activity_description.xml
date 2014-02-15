@@ -86,6 +86,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/textViewDes"
         android:layout_toRightOf="@id/textViewDes"
+        android:layout_marginLeft="5dp"
         android:textSize="20sp" />
 
 
