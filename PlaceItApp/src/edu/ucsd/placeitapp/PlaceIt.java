@@ -83,6 +83,10 @@ public class PlaceIt {
 	public void setRecurring(boolean isRecurring) {
 		this.isRecurring = isRecurring;
 	}
+	
+	public int getRecurringIntervalWeeks() {
+		return this.recurringIntervalWeeks;
+	}
 
 	public void setRecurringIntervalWeeks(int recurringIntervalWeeks) {
 		this.recurringIntervalWeeks = recurringIntervalWeeks;
@@ -97,8 +101,7 @@ public class PlaceIt {
 	}
 
 	public void save() {
-		
-		// TODO
+		this.id = PlaceItDBHelper.getInstance().save(this);
 	}
 
 	public void delete() {
