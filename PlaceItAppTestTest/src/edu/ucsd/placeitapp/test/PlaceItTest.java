@@ -75,17 +75,34 @@ public class PlaceItTest extends AndroidTestCase {
 	}
 
 	public void testDelete() {
-
-	}
-
-	public void testAll() {
 		for (int i = 1; i <= 100; ++i) {
 			PlaceIt placeIt = new PlaceIt("Test Title", "Test Description",
 					this.placeIt.getLocation());
 			placeIt.save();
 		}
 		
+		for (int i = 1; i <= 100; ++i) {
+			PlaceIt placeIt = PlaceIt.find(i);
+			placeIt.delete();
+			
+			assertEquals(placeIt.getId(), -1);
+			
+			placeIt = PlaceIt.find(i);
+			assertNull(placeIt);
+		}
+	}
+
+	public void testAll() {
 		List<PlaceIt> placeIts = PlaceIt.all();
+		assertEquals(placeIts.size(), 0);
+		
+		for (int i = 1; i <= 100; ++i) {
+			PlaceIt placeIt = new PlaceIt("Test Title", "Test Description",
+					this.placeIt.getLocation());
+			placeIt.save();
+		}
+		
+		placeIts = PlaceIt.all();
 		assertEquals(placeIts.size(), 100);
 		for (int i = 0; i < placeIts.size(); ++i) {
 			assertEquals(placeIts.get(i).getId(), i + 1);
