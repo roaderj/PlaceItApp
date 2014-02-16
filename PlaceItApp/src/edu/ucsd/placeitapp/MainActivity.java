@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void goToList(View view) {
-		Intent intent = new Intent(this, ListActivity.class);
+		Intent intent = new Intent(this, ListViewActivity.class);
 		startActivity(intent);
 	}
 }
