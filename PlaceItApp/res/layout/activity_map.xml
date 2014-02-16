@@ -1,6 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.MapFragment"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <RelativeLayout
+        android:id="@+id/NameBarForMap"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/BackBtn_Map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Map"
+            android:layout_centerInParent="true"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/ToListBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="List"
+            android:textColor="#FFFFFF" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutForMap"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/NameBarForMap"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/SearchBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Type Here"
+            android:inputType="text" >
+        </EditText>
+
+        <Button
+            android:id="@+id/findBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Find" >
+        </Button>
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linearLayoutForMap"
+        class="Fcom.google.android.gms.maps.MapFragment" >
+    </fragment>
+
+</RelativeLayout>
