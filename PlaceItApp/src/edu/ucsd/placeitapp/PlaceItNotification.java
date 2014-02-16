@@ -1,5 +1,8 @@
 package edu.ucsd.placeitapp;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -22,7 +25,6 @@ import android.widget.Toast;
  * discard action 4) clearing the notification
  */
 public class PlaceItNotification extends BroadcastReceiver {
-
 	/** The unique identifier for this type of notification. */
 	private static final String NOTIFICATION_TAG = "edu.ucsd.PlaceItApp.PlaceIt";
 
@@ -45,67 +47,50 @@ public class PlaceItNotification extends BroadcastReceiver {
 		final String fullDescription = res.getString(
 				R.string.place_it_notification_text_template, description);
 
-		final NotificationCompat.Builder builder = new NotificationCompat.Builder(
-				context)
+		final NotificationCompat.Builder notification = new NotificationCompat.Builder(
+				context);
 
-				// Set appropriate defaults for the notification light, sound,
-				// and vibration.
-				.setDefaults(Notification.DEFAULT_ALL)
+		// Set appropriate defaults for the notification light, sound,
+		// and vibration.
+		notification.setDefaults(Notification.DEFAULT_ALL);
 
-				// required values
-				.setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle(fullTitle).setContentText(fullDescription)
+		// required values
+		notification.setSmallIcon(R.drawable.ic_launcher);
+		notification.setContentTitle(fullTitle);
+		notification.setContentText(fullDescription);
 
-				// Set preview information for this notification.
-				.setTicker(title)
+		// Set preview information for this notification.
+		notification.setTicker(title);
 
-				// On click action go to DescriptionActivity
-				.setContentIntent(
-						PendingIntent.getActivity(context, 0, new Intent(
-								context, DescriptionActivity.class).putExtra(
-								MainActivity.PLACEIT_ID, pID),
-								PendingIntent.FLAG_UPDATE_CURRENT))
+		// On click action go to DescriptionActivity
+		Intent descriptionIntent = new Intent(context, DescriptionActivity.class)
+				.putExtra(MainActivity.PLACEIT_ID, pID);
+		notification.setContentIntent(PendingIntent.getActivity(context, pID,
+				descriptionIntent, PendingIntent.FLAG_UPDATE_CURRENT));
 
-				// Repost action
-				.addAction(
-						R.drawable.ic_stat_repost,
-						res.getString(R.string.notification_repost),
-						PendingIntent
-								.getBroadcast(
-										context,
-										0,
-										new Intent(context,
-												PlaceItNotification.class)
-												.putExtra(
-														BUTTON_TAG,
-														R.string.notification_repost)
-												.putExtra(
-														MainActivity.PLACEIT_ID,
-														pID),
-										PendingIntent.FLAG_UPDATE_CURRENT))
+		// Repost action
+		Intent repostIntent = new Intent(context, PlaceItNotification.class)
+				.putExtra(BUTTON_TAG, R.string.notification_repost)
+				.putExtra(MainActivity.PLACEIT_ID, pID);
+		notification.addAction(R.drawable.ic_stat_repost, 
+				res.getString(R.string.notification_repost), 
+				PendingIntent.getBroadcast(context, 0, repostIntent,
+						PendingIntent.FLAG_UPDATE_CURRENT));
 
-				// Discard action
-				.addAction(
-						R.drawable.ic_stat_discard,
-						res.getString(R.string.notification_discard),
-						PendingIntent
-								.getBroadcast(
-										context,
-										0,
-										new Intent(context,
-												PlaceItNotification.class)
-												.putExtra(
-														BUTTON_TAG,
-														R.string.notification_discard)
-												.putExtra(
-														MainActivity.PLACEIT_ID,
-														pID),
-										PendingIntent.FLAG_UPDATE_CURRENT))
+		// Discard action
+		Intent discardIntent = new Intent(context, PlaceItNotification.class)
+				.putExtra(BUTTON_TAG, R.string.notification_discard)
+				.putExtra(MainActivity.PLACEIT_ID, pID);
 
-				// Automatically dismiss the notification when it is touched.
-				.setAutoCancel(true);
+		notification.addAction(R.drawable.ic_stat_discard, 
+				res.getString(R.string.notification_discard), 
+				PendingIntent.getBroadcast(context, 0, discardIntent,
+						PendingIntent.FLAG_UPDATE_CURRENT));
 
-		notify(context, builder.build(), pID);
+		// Automatically dismiss the notification when it is touched.
+		notification.setAutoCancel(true);
+
+		notify(context, notification.build(), pID);
 	}
 
 	@TargetApi(Build.VERSION_CODES.ECLAIR)
@@ -140,9 +125,8 @@ public class PlaceItNotification extends BroadcastReceiver {
 		Bundle bundle = intent.getExtras();
 
 		int pID;
-		if ((pID = bundle.getInt(MainActivity.PLACEIT_ID, -1)) == -1) 
-			//pID extra not found
-			throw new RuntimeException("Notification not used correctly");
+		if ((pID = bundle.getInt(MainActivity.PLACEIT_ID, -1)) == -1)
+			throw new RuntimeException("Notification not used correctly: pID not found");
 
 		if (bundle.get(BUTTON_TAG).equals(R.string.notification_discard))
 			discardAction(context, pID);
@@ -154,18 +138,29 @@ public class PlaceItNotification extends BroadcastReceiver {
 
 	private void discardAction(Context context, int pID) {
 		PlaceItNotification.cancel(context, pID);
-		Log.w("Notification", "Place it discarded");
-		Toast.makeText(context, "Place-it discarded.", Toast.LENGTH_LONG).show();
 
-		// TODO: Actually discarding Place-it
+		PlaceIt placeIt = PlaceIt.find(pID);
+		if (placeIt.isRecurring()) {
+			// do nothing, same action as ignoring the notification
+		} else {
+			placeIt.delete();
+		}
+		
+		Log.w("Notification", "Place it " + pID + " discarded");
+		Toast.makeText(context, "Place-it discarded.", Toast.LENGTH_LONG)
+				.show();
 	}
 
 	private void repostAction(Context context, int pID) {
 		PlaceItNotification.cancel(context, pID);
-		Log.w("Notification", "Place it discarded");
-		Toast.makeText(context, "Place-it reposted.", Toast.LENGTH_LONG).show();
+
+		PlaceIt placeIt = PlaceIt.find(pID);
+		placeIt.setStartTime(new Timestamp(new Date().getTime()
+				+ MainActivity.REPOST_WAIT_TIME));
+		placeIt.setAlarm(context);
 		
-		// TODO: Actually reposting Place-it
+		Log.w("Notification", "Place it " + pID + " reposted");
+		Toast.makeText(context, "Place-it reposted.", Toast.LENGTH_LONG).show();
 	}
 
 }

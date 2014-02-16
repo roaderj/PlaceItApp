@@ -18,6 +18,12 @@ public class ProximityAlertReceiver extends BroadcastReceiver {
 		}
 		Log.w("ProximityAlertReceiver", new String("Placeit #" + pID + " was triggered.")); 
 
+		PlaceIt p = PlaceIt.find(pID);
+		p.setEnabled(false); 
+		
+		if (p.isRecurring())
+			p.recur(); 
+		
 		PlaceItNotification.notify(context, pID); 
 	}
 }

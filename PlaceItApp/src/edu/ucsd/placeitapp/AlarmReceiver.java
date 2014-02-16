@@ -9,11 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 /* 
- * For issuing AlarmManager, insert this snippet of code (needs to be modularized somewhere): 
- * 
- * AlarmManager aManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
- * Intent alarmIntent = new Intent(context, AlarmReceiver.class).putExtra(MainActivity.PLACEIT_ID, placeIt.getId()); 
- * aManager.set(AlarmManager.RTC, placeIt.getStartTime(), PendingIntent.getBroadcast(context, requestCode, locationIntent, flags)); 
+ * For issuing an alarm, see setAlarm in PlaceIt. 
  */
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -38,7 +34,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		LocationManager locManager = (LocationManager) 
 				context.getSystemService(Context.LOCATION_SERVICE);
 		
-		int requestCode = 0; // Not sure what this is, used by PendingIntent
+		int requestCode = pID; // Not sure what this is, used by PendingIntent
 		int radius = 1000; // 1000m
 		locManager.addProximityAlert(placeIt.getLocation().getLatitude(),
 				placeIt.getLocation().getLongitude(), 

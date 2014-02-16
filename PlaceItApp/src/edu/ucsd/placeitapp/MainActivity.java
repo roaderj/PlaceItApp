@@ -10,6 +10,9 @@ import android.view.View;
 
 public class MainActivity extends Activity {
 	public final static String PLACEIT_ID = "edu.ucsd.placeitapp.PLACEIT_ID"; 
+	public final static long REPOST_WAIT_TIME = 2700000; // millis in 45 minutes
+	public final static long WEEK_INTERVAL = 604800000; // millis in 1 week
+	public final static long MIN_INTERVAL = 60000; // millis in 1 minutes
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

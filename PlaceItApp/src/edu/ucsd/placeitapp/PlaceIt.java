@@ -4,6 +4,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 
 public class PlaceIt {
@@ -72,7 +76,7 @@ public class PlaceIt {
 		return this.startTime;
 	}
 
-	public void setStarttime(Timestamp startTime) {
+	public void setStartTime(Timestamp startTime) {
 		this.startTime = startTime;
 	}
 
@@ -83,7 +87,7 @@ public class PlaceIt {
 	public void setRecurring(boolean isRecurring) {
 		this.isRecurring = isRecurring;
 	}
-	
+
 	public int getRecurringIntervalWeeks() {
 		return this.recurringIntervalWeeks;
 	}
@@ -115,5 +119,25 @@ public class PlaceIt {
 
 	public static List<PlaceIt> all() {
 		return PlaceItDBHelper.getInstance().all();
+	}
+
+	public void recur() {
+		if (this.isRecurring) {
+			long newTime = startTime.getTime()
+					+ (recurringIntervalWeeks * MainActivity.WEEK_INTERVAL);
+
+			this.setStartTime(new Timestamp(newTime));
+		}
+	}
+	
+	public void setAlarm(Context context) {
+		int pID = this.getId();
+		
+		AlarmManager aManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		Intent alarmIntent = new Intent(context, AlarmReceiver.class).putExtra(
+				MainActivity.PLACEIT_ID, pID);
+		aManager.set(AlarmManager.RTC, this.getStartTime().getTime(),
+				PendingIntent.getBroadcast(context, pID, alarmIntent,
+						PendingIntent.FLAG_UPDATE_CURRENT));
 	}
 }
