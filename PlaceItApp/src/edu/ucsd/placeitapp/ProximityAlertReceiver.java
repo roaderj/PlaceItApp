@@ -24,6 +24,7 @@ public class ProximityAlertReceiver extends BroadcastReceiver {
 			p.recur();
 			p.setAlarm(context, true);
 		}
+		PlaceItList.save(p); 
 		PlaceItNotification.notify(context, pID); 
 	}
 }

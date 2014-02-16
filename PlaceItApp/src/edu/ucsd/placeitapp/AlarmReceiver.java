@@ -23,6 +23,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 		PlaceIt placeIt = PlaceItList.find(pID);
 		placeIt.setEnabled(true);
+		PlaceItList.save(placeIt); 
 		
 		Toast.makeText(context, "Place-it " + pID + " is now enabled.", 
 				Toast.LENGTH_SHORT).show();
