@@ -1,8 +1,6 @@
 package edu.ucsd.placeitapp;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -12,6 +10,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.location.Address;
@@ -40,6 +39,8 @@ public class MapActivity extends Activity {
 	private EditText searchBar;
 	private Geocoder geocoder;
 	private Context mapActivityContext;
+	private ArrayList<Marker> searchMarkers;
+	private Button backBtn;
 	// erase
 	private LatLng latLng;
 	private MarkerOptions markerOptions;
@@ -51,29 +52,63 @@ public class MapActivity extends Activity {
 
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
 				.getMap();
-		placeItList = (ArrayList<PlaceIt>) PlaceIt.all();
+		//placeItList = (ArrayList<PlaceIt>) PlaceIt.all();
 		geocoder = new Geocoder(this, Locale.ENGLISH);
 		findBtn = (Button) findViewById(R.id.findBtn);
-
+		searchMarkers = new ArrayList<Marker>();
 		searchBar = (EditText) findViewById(R.id.SearchBar);
+		backBtn = (Button) findViewById(R.id.BackBtn_Map);
 		mapActivityContext = this;
 		findBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				String location = searchBar.getText().toString();
-
-				if (location == null || location == "") {
-					Toast.makeText(getBaseContext(),
-							"Please enter a location to search",
-							Toast.LENGTH_SHORT).show();
-					return;
-				} else {
-					new GeocoderTask().execute(location);
+				String[] coordination = location.split(",");
+				
+				//search by coordination
+				if(checkForCoordination(coordination)){
+					
+					for(int i =0; i< searchMarkers.size();i++){
+						searchMarkers.get(i).remove();
+					}
+					searchMarkers = new ArrayList<Marker>();
+					
+					double latitude = Double.parseDouble(coordination[0]);
+					double longitude = Double.parseDouble(coordination[1]);
+					LatLng loc = new LatLng(latitude, longitude);
+					markerOptions = new MarkerOptions();
+					markerOptions.position(loc);
+					markerOptions.title(""+latitude +", " + longitude);
+					
+					searchMarkers.add(map.addMarker(markerOptions));
+					map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc,13));
 				}
+				new GeocoderTask().execute(location);
 
 			}
+			
+			private boolean checkForCoordination(String[] coord){
+				try{
+					if(coord.length == 2){
+						Double.parseDouble(coord[0]);
+						Double.parseDouble(coord[1]);
+						return true;
+					}
+				} catch(NumberFormatException e){
+					return false;
+				}
+				return false;
+			}
 		});
+		backBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+		
 
 	}
 
@@ -98,11 +133,15 @@ public class MapActivity extends Activity {
 			if (addresses == null || addresses.size() == 0) {
 				Toast.makeText(getBaseContext(), "No Location found",
 						Toast.LENGTH_SHORT).show();
+				return;
 			}
 
 			// Clears all the existing markers on the map
-			map.clear();
-
+			for(int i =0; i< searchMarkers.size();i++){
+				searchMarkers.get(i).remove();
+			}
+			
+			searchMarkers = new ArrayList<Marker>();
 			// Adding Markers on Google Map for each matching address
 			for (int i = 0; i < addresses.size(); i++) {
 
@@ -122,10 +161,10 @@ public class MapActivity extends Activity {
 				markerOptions.position(latLng);
 				markerOptions.title(addressText);
 
-				map.addMarker(markerOptions);
+				searchMarkers.add(map.addMarker(markerOptions));
 
 				if (i == 0)
-					map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+					map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
 			}
 		}
 
@@ -145,7 +184,7 @@ public class MapActivity extends Activity {
 			Intent newPlaceItIntent = new Intent(mapActivityContext,
 					NewPlaceitActivity.class);
 			newPlaceItIntent.putExtra("location", location);
-
+			
 		}
 
 	}
