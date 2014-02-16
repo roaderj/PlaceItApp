@@ -1,5 +1,6 @@
 package edu.ucsd.placeitapp.test;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import android.location.Location;
@@ -13,7 +14,7 @@ public class PlaceItTest extends AndroidTestCase {
 	public void setUp() {
 		PlaceItDBHelper.setInstance(new RenamingDelegatingContext(getContext(),
 				"test_"));
-		Location location = new Location("test");
+		Location location = new Location("network");
 		location.setLatitude(123.4);
 		location.setLongitude(567.8);
 		placeIt = new PlaceIt("Test Title", "Test Description", location);
@@ -44,6 +45,10 @@ public class PlaceItTest extends AndroidTestCase {
 		location.setLatitude(80085.0);
 		location.setLongitude(8008135.0);
 		placeIt.setLocation(location);
+		placeIt.setStartTime(new Timestamp(5));
+		placeIt.setEnabled(true);
+		placeIt.setRecurring(true);
+		placeIt.setRecurringIntervalWeeks(5);
 
 		placeIt.save();
 		assertEquals(placeIt.getId(), id);
@@ -53,6 +58,10 @@ public class PlaceItTest extends AndroidTestCase {
 		assertEquals(placeIt.getDescription(), "New Description");
 		assertEquals(placeIt.getLocation().getLatitude(), 80085.0);
 		assertEquals(placeIt.getLocation().getLongitude(), 8008135.0);
+		assertEquals(placeIt.getStartTime().getTime(), 5);
+		assertEquals(placeIt.getRecurringIntervalWeeks(), 5);
+		assertEquals(placeIt.isRecurring(), true);
+		assertEquals(placeIt.isEnabled(), true);
 		assertEquals(placeIt.getId(), id);
 	}
 
@@ -60,12 +69,19 @@ public class PlaceItTest extends AndroidTestCase {
 		for (int i = 1; i <= 100; ++i) {
 			PlaceIt placeIt = new PlaceIt("Test Title", "Test Description",
 					this.placeIt.getLocation());
+			placeIt.setStartTime(this.placeIt.getStartTime());
 			placeIt.save();
 		}
 
 		for (int i = 1; i <= 100; ++i) {
 			PlaceIt placeIt = PlaceIt.find(i);
 			assertEquals(placeIt.getId(), i);
+			assertEquals(placeIt.getDescription(), this.placeIt.getDescription());
+			assertEquals(placeIt.getRecurringIntervalWeeks(), this.placeIt.getRecurringIntervalWeeks());
+			assertEquals(placeIt.getTitle(), this.placeIt.getTitle());
+			assertEquals(placeIt.getLocation().getLatitude(), this.placeIt.getLocation().getLatitude());
+			assertEquals(placeIt.getLocation().getLongitude(), this.placeIt.getLocation().getLongitude());
+			assertEquals(placeIt.getStartTime(), this.placeIt.getStartTime());
 		}
 	}
 
