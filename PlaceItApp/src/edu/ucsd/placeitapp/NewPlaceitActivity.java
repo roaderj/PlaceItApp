@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.CheckBox;
@@ -20,7 +21,10 @@ public class NewPlaceitActivity extends Activity {
 		setContentView(R.layout.activity_new_placeit);
 		// get the location
 		Intent intent = getIntent();
-		location = (Location)intent.getSerializableExtra("location");
+		location = new Location("map");
+		location.setLatitude(intent.getDoubleExtra("latitude", 0));
+		location.setLongitude(intent.getDoubleExtra("longitude", 0));
+		Log.d("",""+location.getLatitude()+","+location.getLongitude());
 	}
 
 	@Override
