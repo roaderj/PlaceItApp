@@ -1,7 +1,11 @@
 package edu.ucsd.placeitapp;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -17,7 +21,8 @@ public class DescriptionActivity extends Activity {
 		setContentView(R.layout.activity_description);
 		// get the info about the place-it
 		Intent intent = getIntent();
-		placeit = (PlaceIt) intent.getSerializableExtra("placeit");
+		int pID = intent.getIntExtra(MainActivity.PLACEIT_ID, -1);
+		placeit = PlaceIt.find(pID);
 		// set name
 		TextView nameTextView = (TextView)findViewById(R.id.textViewName);
 		nameTextView.setText(placeit.getTitle());
@@ -50,7 +55,18 @@ public class DescriptionActivity extends Activity {
 	}
 	// Repost the place-it
 	public void repostPlaceIt(View view) {
-		//TODO put alarm here
+		AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+		// placeit is active
+		if (placeit.isEnabled() == true) {
+			dlgAlert.setMessage("Place-it is active");
+			dlgAlert.setPositiveButton("OK", null);
+			dlgAlert.setCancelable(true);
+			dlgAlert.create().show();
+			return;
+		}
+		placeit.setStartTime(new Timestamp(new Date().getTime()));
+		// start time is now
+		placeit.setAlarm(this);
 		finish();
 	}
 	// Go back to the former activity

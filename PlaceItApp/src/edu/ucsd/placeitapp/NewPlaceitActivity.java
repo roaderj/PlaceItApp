@@ -76,7 +76,7 @@ public class NewPlaceitActivity extends Activity {
 			placeit.setRecurringIntervalWeeks(time);
 		}
 		placeit.save();
-		//TODO put alarm here
+		placeit.setAlarm(this);
 		finish();
 	}
 }
