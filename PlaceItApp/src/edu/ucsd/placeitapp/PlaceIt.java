@@ -92,8 +92,6 @@ public class PlaceIt {
 
 	public void setStartTime(Timestamp startTime) {
 		this.startTime = startTime;
-
-		PlaceItList.save(this);
 	}
 
 	public boolean isRecurring() {
@@ -133,6 +131,8 @@ public class PlaceIt {
 
 	public void repost() {
 		this.setStartTime(new Timestamp(new Date().getTime() + REPOST_WAIT_TIME));
+		
+		PlaceItList.save(this); 
 	}
 
 	public void discard() {
@@ -185,6 +185,8 @@ public class PlaceIt {
 					+ (this.getRecurringIntervalWeeks() * PlaceIt.RECURRING_INTERVAL);
 
 			this.setStartTime(new Timestamp(newTime));
+			
+			PlaceItList.save(this); 
 		}
 	}
 	

@@ -80,8 +80,8 @@ public class NewPlaceitActivity extends Activity {
 			placeit = new PlaceIt(name, des, location, true, time); 
 		else
 			placeit = new PlaceIt(name, des, location); 
+		
 		PlaceItList.save(placeit); 
-				
 		placeit.setAlarm(this.getApplicationContext(), true);
 		finish();
 	}
