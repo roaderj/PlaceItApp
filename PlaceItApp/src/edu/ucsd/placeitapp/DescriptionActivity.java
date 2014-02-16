@@ -17,11 +17,13 @@ public class DescriptionActivity extends Activity {
 		setContentView(R.layout.activity_description);
 		
 		Intent intent = getIntent();
-		placeit = (PlaceIt) intent.getSerializableExtra("placeit");
+		//placeit = (PlaceIt) intent.getSerializableExtra("placeit");
 		TextView nameTextView = (TextView)findViewById(R.id.textViewName);
 		nameTextView.setText(placeit.getTitle());
-		TextView desTextView = (TextView)findViewById(R.id.textViewDes);
+		TextView desTextView = (TextView)findViewById(R.id.textShowDes);
 		desTextView.setText(placeit.getDescription());
+		TextView schTextView = (TextView)findViewById(R.id.textShowSch);
+		//TODO
 		
 	}
 
