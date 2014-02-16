@@ -59,6 +59,7 @@
 
     <TextView
         android:id="@+id/textShowSch"
+        android:text="stuff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/textViewSch"
@@ -79,6 +80,7 @@
     
     <TextView
         android:id="@+id/textShowDes"
+        android:text="stuff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/textViewSch"
