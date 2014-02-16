@@ -1,12 +1,10 @@
 package edu.ucsd.placeitapp;
 
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Toast;
 
 /* 
  * For issuing an alarm, see setAlarm in PlaceIt. 
@@ -23,25 +21,14 @@ public class AlarmReceiver extends BroadcastReceiver {
 		if (pID == -1)
 			throw new RuntimeException("AlarmReceiver used incorrectly.");
 
-		Log.w("AlarmReceiver", new String("Placeit #" + pID + " is now enabled."));
-
-		PlaceIt placeIt = PlaceIt.find(pID);
-		// TODO: Modify placeIt accordingly
-
-		Intent locationIntent = new Intent(context, ProximityAlertReceiver.class)
-			.putExtra(MainActivity.PLACEIT_ID, pID);
-
-		LocationManager locManager = (LocationManager) 
-				context.getSystemService(Context.LOCATION_SERVICE);
+		PlaceIt placeIt = PlaceItList.find(pID);
+		placeIt.setEnabled(true);
 		
-		int requestCode = pID; // Not sure what this is, used by PendingIntent
-		int radius = 1000; // 1000m
-		locManager.addProximityAlert(placeIt.getLocation().getLatitude(),
-				placeIt.getLocation().getLongitude(), 
-				radius, // Defined in AlarmReceiver, should probably be defined in PlaceIt. 
-				-1, // No expiration time
-				PendingIntent.getBroadcast(context, requestCode,
-						locationIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+		Toast.makeText(context, "Place-it " + pID + " is now enabled.", 
+				Toast.LENGTH_SHORT).show();
+
+		placeIt.trackLocation(context, true);
+
 		
 	}
 

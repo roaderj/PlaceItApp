@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
-    <issue id="InlinedApi">
-        <ignore path="src/edu/ucsd/placeitapp/ListViewActivity.java" />
-    </issue>
-    <issue id="NewApi">
-        <ignore path="src/edu/ucsd/placeitapp/ListViewActivity.java" />
-    </issue>
     <issue id="ValidFragment">
         <ignore path="src/edu/ucsd/placeitapp/ListTabFragment.java" />
     </issue>

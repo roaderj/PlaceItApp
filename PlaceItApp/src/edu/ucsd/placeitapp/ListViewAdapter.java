@@ -11,9 +11,9 @@ public class ListViewAdapter extends FragmentPagerAdapter {
 
 	List<PlaceIt> placeIts;
 
-	public ListViewAdapter(FragmentManager fm, List<PlaceIt> data) {
+	public ListViewAdapter(FragmentManager fm) {
 		super(fm);
-		placeIts = data;
+		this.placeIts = PlaceItList.all();
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class ListViewAdapter extends FragmentPagerAdapter {
 		switch (index) {
 		case 0:
 			// active fragment activity
-			ListTabFragment activeTab = new ListTabFragment(getActivePlaceIts());
+			ListTabFragment activeTab = new ListTabFragment(getActive());
 			return activeTab;
 		case 1:
 			ListTabFragment pulledDownTab = new ListTabFragment(getPulledDown());
@@ -37,10 +37,10 @@ public class ListViewAdapter extends FragmentPagerAdapter {
 		return 2;
 	}
 	
-	private List<PlaceIt> getActivePlaceIts() {
+	private List<PlaceIt> getActive() {
 		List<PlaceIt> activeList = new ArrayList<PlaceIt>(); 
 		for (PlaceIt placeIt : placeIts) {
-			if (placeIt.isEnabled())
+			if (placeIt.isActive())
 				activeList.add(placeIt); 
 		}
 		return activeList; 
@@ -49,9 +49,10 @@ public class ListViewAdapter extends FragmentPagerAdapter {
 	private List<PlaceIt> getPulledDown() {
 		List<PlaceIt> pulledDown = new ArrayList<PlaceIt>(); 
 		for (PlaceIt placeIt : placeIts) {
-			if (!placeIt.isEnabled())
+			if (!placeIt.isActive())
 				pulledDown.add(placeIt); 
 		}
 		return pulledDown; 
 	}
+	
 }

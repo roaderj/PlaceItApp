@@ -14,14 +14,16 @@
             android:id="@+id/BackBtnForList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back" />
+            android:text="@string/back" 
+            android:onClick="goBack"/>
 
         <Button
             android:id="@+id/MapBtnForList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="Map" />
+            android:text="@string/map" 
+            android:onClick="goToMap"/>
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
