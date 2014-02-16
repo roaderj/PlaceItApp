@@ -78,6 +78,7 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 		mapListener = new myMapClickListener();
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
 				.getMap();
+
 		geocoder = new Geocoder(this, Locale.ENGLISH);
 		findBtn = (Button) findViewById(R.id.findBtn);
 		searchMarkers = new ArrayList<Marker>();

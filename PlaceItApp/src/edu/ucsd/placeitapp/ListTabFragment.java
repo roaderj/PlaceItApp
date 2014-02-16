@@ -28,21 +28,21 @@ public class ListTabFragment extends Fragment {
 
 	public ListTabFragment(List<PlaceIt> data) {
 		super();
-		placeIts = data;
+		this.placeIts = data;
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 	}
 
 	@Override
 	public void onStart() {
+		super.onStart();
+
 		view = (ListView) this.getView().findViewById(R.id.activeView);
 
 		aAdapter = new PlaceItAdapter(this.getActivity(), placeIts);
-		super.onStart();
 		view.setAdapter(aAdapter);
 		view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override

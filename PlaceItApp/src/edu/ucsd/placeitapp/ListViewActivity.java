@@ -1,6 +1,8 @@
 package edu.ucsd.placeitapp;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -13,22 +15,19 @@ import android.view.Menu;
 import android.view.View;
 
 
-public class ListViewActivity extends FragmentActivity implements ActionBar.TabListener {
+public class ListViewActivity extends FragmentActivity implements ActionBar.TabListener, Observer {
 
+	private Observable data = PlaceItList.getInstance();
+	
 	private ViewPager viewPager;
 	private ListViewAdapter mAdapter;
 	private ActionBar actionBar;
 		
 	List<PlaceIt> placeIts; 
 	
-	
-	
-	// Tab titles
 	private String[] tabs = { "Active", "Pulled Down" };
+
 	
-	public  static final String FRAGMENT_ID = "edu.ucsd.placeitapp.fragment_id"; 
-
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -45,25 +44,16 @@ public class ListViewActivity extends FragmentActivity implements ActionBar.TabL
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
 		
-//		values = new ArrayList<PlaceIt>(); 
-//		for (int i = 0; i < values1.length; ++i) {
-//			PlaceIt x = new PlaceIt(values1[i], null, null); 
-//			if ((i % 2) == 0 ) {
-//				x.setEnabled(true);
-//			}
-//			x.
-//			values.add(x); 
-//			
-//		}
-		placeIts = PlaceIt.all(); 
+		placeIts = PlaceItList.all(); 
 		
-		mAdapter = new ListViewAdapter(getSupportFragmentManager(), placeIts);
+		mAdapter = new ListViewAdapter(getSupportFragmentManager());
+		data.addObserver(this); 
+
 
 		viewPager.setAdapter(mAdapter);
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);        
 
-		
 		// Adding Tabs
 		for (String tab : tabs) {
 			actionBar.addTab(actionBar.newTab().setText(tab)
@@ -95,12 +85,17 @@ public class ListViewActivity extends FragmentActivity implements ActionBar.TabL
 	}
 	
 	@Override
+	public void onDestroy() {
+		super.onDestroy(); 
+		data.deleteObserver(this); 
+	}
+	
+	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 	}
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		//activeView.setAdapter(aAdapter); 
 		viewPager.setCurrentItem(tab.getPosition());
 	}
 
@@ -116,6 +111,13 @@ public class ListViewActivity extends FragmentActivity implements ActionBar.TabL
 	
 	public void goBack(View view) {
 		finish(); 
+	}
+
+	@Override
+	public void update(Observable observable, Object data) {
+		//Inefficient
+		finish();
+		startActivity(getIntent());
 	}
 	
 
