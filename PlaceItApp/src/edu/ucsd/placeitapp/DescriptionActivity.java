@@ -15,16 +15,26 @@ public class DescriptionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_description);
-		
+		// get the info about the place-it
 		Intent intent = getIntent();
-		//placeit = (PlaceIt) intent.getSerializableExtra("placeit");
+		placeit = (PlaceIt) intent.getSerializableExtra("placeit");
+		// set name
 		TextView nameTextView = (TextView)findViewById(R.id.textViewName);
 		nameTextView.setText(placeit.getTitle());
+		// set description
 		TextView desTextView = (TextView)findViewById(R.id.textShowDes);
 		desTextView.setText(placeit.getDescription());
+		// set recurring info
 		TextView schTextView = (TextView)findViewById(R.id.textShowSch);
-		//TODO
-		
+		if (placeit.isRecurring() == false)
+			schTextView.setText("Not Recurring");
+		else {
+			int time = placeit.getRecurringIntervalWeeks();
+			if (time <= 1)
+				schTextView.setText(time + " week");
+			else
+				schTextView.setText(time + " weeks");
+		}
 	}
 
 	@Override
@@ -33,17 +43,17 @@ public class DescriptionActivity extends Activity {
 		getMenuInflater().inflate(R.menu.description, menu);
 		return true;
 	}
-
+	// Delete the current place-it
 	public void deletePlaceIt(View view) {
 		placeit.delete();
 		finish();
 	}
-	
+	// Repost the place-it
 	public void repostPlaceIt(View view) {
-		//TODO
+		//TODO put alarm here
 		finish();
 	}
-	
+	// Go back to the former activity
 	public void back(View view) {
 		finish();
 	}
