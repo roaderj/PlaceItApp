@@ -1,9 +1,7 @@
 package edu.ucsd.placeitapp;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
@@ -11,24 +9,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-@SuppressLint("NewApi")
+
 public class ListViewActivity extends FragmentActivity implements ActionBar.TabListener {
 
 	private ViewPager viewPager;
 	private ListViewAdapter mAdapter;
 	private ActionBar actionBar;
-	
-	String[] values1 = new String[] { "Android", "iPhone", "WindowsMobile",
-	        "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-	        "Linux", "OS/2" }; 
-	
-	List<PlaceIt> values; 
+		
+	List<PlaceIt> placeIts; 
 	
 	
 	
@@ -64,9 +55,9 @@ public class ListViewActivity extends FragmentActivity implements ActionBar.TabL
 //			values.add(x); 
 //			
 //		}
-		values = PlaceIt.all(); 
+		placeIts = PlaceIt.all(); 
 		
-		mAdapter = new ListViewAdapter(getSupportFragmentManager(), values);
+		mAdapter = new ListViewAdapter(getSupportFragmentManager(), placeIts);
 
 		viewPager.setAdapter(mAdapter);
 		actionBar.setHomeButtonEnabled(true);
@@ -74,8 +65,8 @@ public class ListViewActivity extends FragmentActivity implements ActionBar.TabL
 
 		
 		// Adding Tabs
-		for (String tab_name : tabs) {
-			actionBar.addTab(actionBar.newTab().setText(tab_name)
+		for (String tab : tabs) {
+			actionBar.addTab(actionBar.newTab().setText(tab)
 					.setTabListener(this));
 		}
 
@@ -121,6 +112,10 @@ public class ListViewActivity extends FragmentActivity implements ActionBar.TabL
 	public void goToMap(View view) {
 		Intent intent = new Intent(this, MapActivity.class);
 		startActivity(intent);
+	}
+	
+	public void goBack(View view) {
+		finish(); 
 	}
 	
 
