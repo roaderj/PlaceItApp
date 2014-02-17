@@ -19,12 +19,19 @@ public class DescriptionTest extends AndroidTestCase {
 		PlaceItDBHelper.getInstance().close();
 	}
 	
-	private void mapClick() {}
+	private void mapClick() {
+	}
 	
 	private void listClick() {}
 	
 	private void descriptionMatches() {}
 	
 	private void initialView() {}
+	
+	public void testViewFromList() {
+		
+	}
+	
+	public void testViewFromMap() {}
 
 }
