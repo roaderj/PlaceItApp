@@ -1,5 +1,8 @@
 package edu.ucsd.placeitapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -20,10 +23,14 @@ import android.widget.Toast;
  */
 public class PlaceItNotification extends BroadcastReceiver {
 	/** The unique identifier for this type of notification. */
-	private static final String NOTIFICATION_TAG = "edu.ucsd.PlaceItApp.PlaceIt";
+	public static final String NOTIFICATION_TAG = "edu.ucsd.PlaceItApp.PlaceIt";
 
 	/** Identifier for notification action extras. */
 	private static final String BUTTON_TAG = "edu.ucsd.PlaceItApp.Button";
+	
+	public static List<Integer> placeIts = new ArrayList<Integer>(); 
+
+	
 
 	/**
 	 * Shows the notification with repost and discard options. Multiple
@@ -31,6 +38,8 @@ public class PlaceItNotification extends BroadcastReceiver {
 	 */
 	public static void notify(final Context context, final int pID) {
 		final Resources res = context.getResources();
+		
+		placeIts.add(pID); 
 
 		PlaceIt placeIt = PlaceItList.find(pID);
 		final String title = placeIt.getTitle();
