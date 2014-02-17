@@ -17,12 +17,6 @@ public class DescriptionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_description);
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-
 		// get the info about the place-it
 		Intent intent = getIntent();
 		int pID = intent.getIntExtra(MainActivity.PLACEIT_ID, -1);
@@ -49,6 +43,13 @@ public class DescriptionActivity extends Activity {
 		if (placeit.isEnabled()) {
 			repost.setEnabled(false);
 		}
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+
 	}
 
 	@Override

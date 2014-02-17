@@ -11,10 +11,12 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -41,54 +43,54 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class MapActivity extends Activity implements OnMyLocationChangeListener {
+public class MapActivity extends Activity implements
+		OnMyLocationChangeListener, OnInfoWindowClickListener {
 
+	// latitude and longitude of UCSD in case for no gps
 	private final static double UCSD_LATITUDE = 32.8741609;
 	private final static double UCSD_LONGITUDE = -117.2357297;
 
+	// list of place-its
 	private ArrayList<PlaceIt> placeItList;
 	private ArrayList<Marker> placeItMarkers;
-	private Button findBtn;
-	private GoogleMap map;
-	private EditText searchBar;
-	private Geocoder geocoder;
-	private Context mapActivityContext;
 	private ArrayList<Marker> searchMarkers;
-	private Button backBtn;
-	private myMapClickListener mapListener;
-	private LocationManager myLocManager;
-	private String locationProvider;
-	private Location currentLocation;
-	// erase
-	private LatLng latLng;
-	private MarkerOptions markerOptions;
 
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		placeItList = (ArrayList<PlaceIt>) PlaceIt.all();
-		loadMarkers();
-	}
+	// Google map for the user
+	private GoogleMap map;
+
+	// GUI components
+	private Button backBtn;
+	private Button findBtn;
+	private Button listBtn;
+	private EditText searchBar;
+	// context of map activity
+	private Context mapActivityContext;
+	private Geocoder geocoder;
+	private LatLng currentLocation;
+	// check for first launch to move camera to current location
+	private boolean firstLaunch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-		mapListener = new myMapClickListener();
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
 				.getMap();
-
-		geocoder = new Geocoder(this, Locale.ENGLISH);
+		// retrieve gui components
 		findBtn = (Button) findViewById(R.id.findBtn);
+		backBtn = (Button) findViewById(R.id.BackBtn_Map);
+		listBtn = (Button) findViewById(R.id.ToListBtn);
+		searchBar = (EditText) findViewById(R.id.SearchBar);
+		// set up geocoder to English
+		geocoder = new Geocoder(this, Locale.ENGLISH);
+		// initialize markers
 		searchMarkers = new ArrayList<Marker>();
 		placeItMarkers = new ArrayList<Marker>();
-		searchBar = (EditText) findViewById(R.id.SearchBar);
-		backBtn = (Button) findViewById(R.id.BackBtn_Map);
+
 		mapActivityContext = this;
 
-
-		map.setOnMapClickListener(mapListener);
+		map.setOnMapClickListener(new myMapClickListener());
+		// set onclick behaviors to gui components
 		findBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -107,7 +109,7 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 					double latitude = Double.parseDouble(coordination[0]);
 					double longitude = Double.parseDouble(coordination[1]);
 					LatLng loc = new LatLng(latitude, longitude);
-					markerOptions = new MarkerOptions();
+					MarkerOptions markerOptions = new MarkerOptions();
 					markerOptions.position(loc);
 					markerOptions.title("" + latitude + ", " + longitude);
 
@@ -115,10 +117,13 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 					map.animateCamera(CameraUpdateFactory
 							.newLatLngZoom(loc, 13));
 				}
-				new GeocoderTask().execute(location);
+				// search by name
+				else
+					new GeocoderTask().execute(location);
 
 			}
 
+			// check whether given string array is in coordination format
 			private boolean checkForCoordination(String[] coord) {
 				try {
 					if (coord.length == 2) {
@@ -139,41 +144,68 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 				finish();
 			}
 		});
+		listBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(mapActivityContext,
+						ListViewActivity.class);
+				startActivity(intent);
+			}
+		});
+		// check status of google play service
 		int status = GooglePlayServicesUtil
 				.isGooglePlayServicesAvailable(getBaseContext());
 
-		if (status != ConnectionResult.SUCCESS) { // Google Play Services are
-													// not available
+		// When google play services is not available
+		if (status != ConnectionResult.SUCCESS) {
 			int requestCode = 10;
 			Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this,
 					requestCode);
 			dialog.show();
 
-		} else { // Google Play Services are available
-
-            // Enabling MyLocation Layer of Google Map
-            map.setMyLocationEnabled(true);
- 
-            // Setting event handler for location change
-            map.setOnMyLocationChangeListener(this);
-            
-    		map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(UCSD_LATITUDE,
-    				UCSD_LONGITUDE)));
-    		map.animateCamera(CameraUpdateFactory.zoomTo(15));
 		}
+		// Google Play Service is available
+		else {
 
+			// enable my location.
+			map.setMyLocationEnabled(true);
+
+			// set behavior if my location changes
+			map.setOnMyLocationChangeListener(this);
+
+			map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(
+					UCSD_LATITUDE, UCSD_LONGITUDE)));
+			map.animateCamera(CameraUpdateFactory.zoomTo(15));
+		}
+		map.setOnInfoWindowClickListener(this);
 
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		// get all placeits
+		placeItList = (ArrayList<PlaceIt>) PlaceIt.all();
+		// put all placeIts on the map
+		loadMarkers();
+		// set first launch to true so that current location will be centered
+		firstLaunch = true;
+		map.animateCamera(CameraUpdateFactory.zoomTo(15));
+	}
+
+	/*
+	 * Method for getting the locations from the name. Get up to 15 locations.
+	 * Move to the first location on the list
+	 */
 	private class GeocoderTask extends AsyncTask<String, Void, List<Address>> {
 
 		@Override
 		protected List<Address> doInBackground(String... locationName) {
-			Geocoder geocoder = new Geocoder(getBaseContext());
 			List<Address> addresses = null;
 
 			try {
-				addresses = geocoder.getFromLocationName(locationName[0], 10);
+				addresses = geocoder.getFromLocationName(locationName[0], 15);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -193,15 +225,15 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 			for (int i = 0; i < searchMarkers.size(); i++) {
 				searchMarkers.get(i).remove();
 			}
-
 			searchMarkers = new ArrayList<Marker>();
-			// Adding Markers on Google Map for each matching address
+
+			// add markers on the map
 			for (int i = 0; i < addresses.size(); i++) {
 
 				Address address = (Address) addresses.get(i);
 
-				// Creating an instance of GeoPoint, to display in Google Map
-				latLng = new LatLng(address.getLatitude(),
+				// get the coordinates of the location for the map
+				LatLng latLng = new LatLng(address.getLatitude(),
 						address.getLongitude());
 
 				String addressText = String.format(
@@ -210,12 +242,13 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 								.getAddressLine(0) : "", address
 								.getCountryName());
 
-				markerOptions = new MarkerOptions();
+				MarkerOptions markerOptions = new MarkerOptions();
 				markerOptions.position(latLng);
 				markerOptions.title(addressText);
 
 				searchMarkers.add(map.addMarker(markerOptions));
 
+				// move to first location on the list
 				if (i == 0)
 					map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,
 							14));
@@ -224,25 +257,37 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 
 	}
 
+	/*
+	 * load placeIt markers on the map
+	 */
 	private void loadMarkers() {
 		erasePlaceItMarkers();
 		placeItMarkers = new ArrayList<Marker>();
-		for(int i = 0; i < placeItList.size();i++){
+		for (int i = 0; i < placeItList.size(); i++) {
 			Location loc = placeItList.get(i).getLocation();
 			String title = placeItList.get(i).getTitle();
 			MarkerOptions marker = new MarkerOptions();
 			marker.position(new LatLng(loc.getLatitude(), loc.getLongitude()));
 			marker.title(title);
-			
+			marker.icon(BitmapDescriptorFactory
+					.fromResource(R.drawable.marker_img));
+
 			placeItMarkers.add(map.addMarker(marker));
 		}
 	}
-	private void erasePlaceItMarkers(){
-		for(int i = 0; i<placeItMarkers.size(); i++){
+
+	/*
+	 * erase placeit markers on the map
+	 */
+	private void erasePlaceItMarkers() {
+		for (int i = 0; i < placeItMarkers.size(); i++) {
 			placeItMarkers.get(i).remove();
 		}
 	}
 
+	/*
+	 * Listener for clicking on the map. creates new placeIt
+	 */
 	private class myMapClickListener implements OnMapClickListener {
 
 		@Override
@@ -263,17 +308,46 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 		return true;
 	}
 
+	/* 
+	 * behavior for change in my location
+	 * if first launch, including resume, move camera to current location
+	 */
 	@Override
 	public void onMyLocationChange(Location location) {
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
 
-		LatLng latLng = new LatLng(latitude, longitude);
+		currentLocation = new LatLng(latitude, longitude);
+		if (firstLaunch) {
+			map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+			firstLaunch = false;
+		}
 
-		map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-		
+	}
+	/*
+	 * when infowindow for marker is clicked
+	 * if marker from search, create new PlaceIt
+	 * if marker from PlaceIt, go to description page
+	 */
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+		if (searchMarkers.contains(marker)) {
+			Intent newPlaceItIntent = new Intent(mapActivityContext,
+					NewPlaceitActivity.class);
+			LatLng loc = marker.getPosition();
+			newPlaceItIntent.putExtra("latitude", loc.latitude);
+			newPlaceItIntent.putExtra("longitude", loc.longitude);
+			startActivity(newPlaceItIntent);
+			marker.remove();
+		} else if (placeItMarkers.contains(marker)) {
+			Intent viewDescription = new Intent(mapActivityContext,
+					DescriptionActivity.class);
+			int pnt = placeItMarkers.indexOf(marker);
+			viewDescription.putExtra(MainActivity.PLACEIT_ID,
+					placeItList.get(pnt).getId());
+			startActivity(viewDescription);
 
-		
+		}
 	}
 
 }

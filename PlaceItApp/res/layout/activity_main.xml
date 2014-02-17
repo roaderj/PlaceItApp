@@ -44,9 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="@string/help" 
-        android:onClick="testClick"
-        />
+        android:text="@string/help" />
 
 
 </RelativeLayout>
