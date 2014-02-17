@@ -95,7 +95,7 @@ public class NotificationTest extends ActivityInstrumentationTestCase2<MainActiv
 //	Given that I am using my Place-It app
 //	When I am near a Place-It
 //	I will be notified the default android way by notification and vibrate. 
-
+/*
 	public void testUserNotified() {
 		Location l = new Location("test"); 
 		l.setLatitude(30); 
@@ -111,7 +111,7 @@ public class NotificationTest extends ActivityInstrumentationTestCase2<MainActiv
 		//notificationExists(placeIt.getId()); 
 			
 	}
-
+*/
 
 //	Scenario 3: User does not want to complete the Place-it task
 //	Given that the user is at the Place-it location for a different reason
