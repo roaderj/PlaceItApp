@@ -1,39 +1,40 @@
 package edu.ucsd.placeitapp.test;
 
-import android.location.Location;
-import android.test.AndroidTestCase;
+import com.robotium.solo.Solo;
+
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.RenamingDelegatingContext;
 import edu.ucsd.placeitapp.*;
 
-public class MapTest extends AndroidTestCase {
-
-	public void setUp() {
-		PlaceItDBHelper.setInstance(new RenamingDelegatingContext(getContext(),
-				"test_"));
-		PlaceItList.setInstance(new RenamingDelegatingContext(getContext(),
-				"test_"));
+public class MapTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	private Solo solo;
+	public MapTest() {
+		super(MainActivity.class);
 	}
 
-	public void tearDown() {
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+		PlaceItDBHelper.setInstance(new RenamingDelegatingContext(getActivity(),
+				"test_"));	
+		PlaceItList.setInstance(new RenamingDelegatingContext(getActivity(),
+				"test_"));
+		solo = new Solo(getInstrumentation(),getActivity());
+	}	
+
+	@Override
+	public void tearDown() throws Exception {
 		PlaceItDBHelper.getInstance().close();
+		solo.finishOpenedActivities();
+		super.tearDown();
 	}
-	
-	private void gpsIs(boolean enabled) {
-		
+	// Given the user open the app
+	// When the user click on the map button
+	// Then the map show
+	public void testOpenMap() {
+		solo.assertCurrentActivity("wrong activity", MainActivity.class);
+		solo.clickOnButton("Map");
+		solo.assertCurrentActivity("wrong activity", MapActivity.class);
 	}
-	
-	private void firstUse(boolean first) {
-		
-	}
-	
-	private void openMap() {
-		
-	}
-	
-	public void testFirstUseAndGpsOff() {}
-	
-	public void testUsedAndGpsOff() {}
-	
-	public void testUsedAndGpsOn() {}
 	
 }
