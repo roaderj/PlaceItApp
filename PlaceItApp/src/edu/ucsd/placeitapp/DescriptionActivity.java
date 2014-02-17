@@ -34,9 +34,9 @@ public class DescriptionActivity extends Activity {
 		else {
 			int time = placeit.getRecurringIntervalWeeks();
 			if (time <= 1)
-				schTextView.setText(time + " week");
+				schTextView.setText(time + " minute");
 			else
-				schTextView.setText(time + " weeks");
+				schTextView.setText(time + " minutes");
 		}
 
 		Button repost = (Button) findViewById(R.id.buttonRep);

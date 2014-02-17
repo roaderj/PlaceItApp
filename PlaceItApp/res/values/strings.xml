@@ -24,7 +24,7 @@
     <string name="schedule">Schedule：</string>
     <string name="enterDes">Enter Description</string>
     <string name="enterNam">Enter Name</string>
-    <string name="weeks"># of weeks</string>
+    <string name="weeks"># of minutes</string>
     <string name="repost">Repost</string>
     <string name="delete">Delete</string>
     
