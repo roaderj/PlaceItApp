@@ -75,7 +75,7 @@ public class PlaceItDBHelper extends SQLiteOpenHelper {
 		location.setLatitude(latitude);
 		location.setLongitude(longitude);
 
-		Timestamp startTime = new Timestamp(cursor.getInt(cursor
+		Timestamp startTime = new Timestamp(cursor.getLong(cursor
 				.getColumnIndex(PLACEIT_START_TIME_COLUMN_NAME)));
 		boolean isEnabled = cursor.getInt(cursor
 				.getColumnIndex(PLACEIT_IS_ENABLED_COLUMN_NAME)) == 1;

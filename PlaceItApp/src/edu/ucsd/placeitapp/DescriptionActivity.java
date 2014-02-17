@@ -1,15 +1,13 @@
 package edu.ucsd.placeitapp;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DescriptionActivity extends Activity {
 
@@ -22,7 +20,7 @@ public class DescriptionActivity extends Activity {
 		// get the info about the place-it
 		Intent intent = getIntent();
 		int pID = intent.getIntExtra(MainActivity.PLACEIT_ID, -1);
-		placeit = PlaceIt.find(pID);
+		placeit = PlaceItList.find(pID);
 		// set name
 		TextView nameTextView = (TextView) findViewById(R.id.textViewName);
 		nameTextView.setText(placeit.getTitle());
@@ -39,6 +37,11 @@ public class DescriptionActivity extends Activity {
 				schTextView.setText(time + " week");
 			else
 				schTextView.setText(time + " weeks");
+		}
+
+		Button repost = (Button) findViewById(R.id.buttonRep);
+		if (placeit.isEnabled()) {
+			repost.setEnabled(false);
 		}
 	}
 
@@ -58,24 +61,22 @@ public class DescriptionActivity extends Activity {
 
 	// Delete the current place-it
 	public void deletePlaceIt(View view) {
-		placeit.delete();
+		
+		PlaceItList.delete(placeit);
+		Toast.makeText(this, "Place-it was deleted.", Toast.LENGTH_LONG).show();
+		
 		finish();
 	}
 
 	// Repost the place-it
 	public void repostPlaceIt(View view) {
-		AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-		// placeit is active
-		if (placeit.isEnabled() == true) {
-			dlgAlert.setMessage("Place-it is active");
-			dlgAlert.setPositiveButton("OK", null);
-			dlgAlert.setCancelable(true);
-			dlgAlert.create().show();
-			return;
-		}
-		placeit.setStartTime(new Timestamp(new Date().getTime()));
-		// start time is now
-		placeit.setAlarm(this);
+
+		placeit.repost();
+		placeit.setAlarm(this.getApplicationContext(), true);
+		
+		Toast.makeText(this, "Place-it will be reposted in 10 seconds.",
+				Toast.LENGTH_LONG).show();
+
 		finish();
 	}
 

@@ -50,6 +50,7 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener,
 	private ArrayList<PlaceIt> placeItList;
 	private ArrayList<Marker> placeItMarkers;
 	private ArrayList<Marker> searchMarkers;
+
 	private Button findBtn;
 	private GoogleMap map;
 	private EditText searchBar;
@@ -65,6 +66,7 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener,
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+			
 		placeItList = (ArrayList<PlaceIt>) PlaceIt.all();
 		loadMarkers();
 
@@ -80,6 +82,7 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener,
 		mapListener = new myMapClickListener();
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
 				.getMap();
+
 		geocoder = new Geocoder(this, Locale.ENGLISH);
 		findBtn = (Button) findViewById(R.id.findBtn);
 		searchMarkers = new ArrayList<Marker>();

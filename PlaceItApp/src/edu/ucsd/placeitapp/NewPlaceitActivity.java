@@ -74,13 +74,15 @@ public class NewPlaceitActivity extends Activity {
 				return;
 			}
 		}
-		PlaceIt placeit = new PlaceIt(name,des,location);
-		if (check.isChecked()) {
-			placeit.setRecurring(true);
-			placeit.setRecurringIntervalWeeks(time);
-		}
-		placeit.save();
-		placeit.setAlarm(this);
+		
+		PlaceIt placeit; 
+		if (check.isChecked())
+			placeit = new PlaceIt(name, des, location, true, time); 
+		else
+			placeit = new PlaceIt(name, des, location); 
+		
+		PlaceItList.save(placeit); 
+		placeit.setAlarm(this.getApplicationContext(), true);
 		finish();
 	}
 }
