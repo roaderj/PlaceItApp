@@ -11,6 +11,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
@@ -41,27 +42,24 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class MapActivity extends Activity implements OnMyLocationChangeListener {
+public class MapActivity extends Activity implements OnMyLocationChangeListener, OnInfoWindowClickListener {
 
 	private final static double UCSD_LATITUDE = 32.8741609;
 	private final static double UCSD_LONGITUDE = -117.2357297;
 
 	private ArrayList<PlaceIt> placeItList;
 	private ArrayList<Marker> placeItMarkers;
+	private ArrayList<Marker> searchMarkers;
 	private Button findBtn;
 	private GoogleMap map;
 	private EditText searchBar;
 	private Geocoder geocoder;
 	private Context mapActivityContext;
-	private ArrayList<Marker> searchMarkers;
 	private Button backBtn;
 	private myMapClickListener mapListener;
-	private LocationManager myLocManager;
-	private String locationProvider;
-	private Location currentLocation;
-	// erase
-	private LatLng latLng;
-	private MarkerOptions markerOptions;
+	private LatLng currentLocation;
+	private boolean firstLaunch;
+
 
 	@Override
 	protected void onResume() {
@@ -69,12 +67,16 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 		super.onResume();
 		placeItList = (ArrayList<PlaceIt>) PlaceIt.all();
 		loadMarkers();
+
+		map.animateCamera(CameraUpdateFactory.zoomTo(15));
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
+		firstLaunch = true;
+		
 		mapListener = new myMapClickListener();
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
 				.getMap();
@@ -106,7 +108,7 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 					double latitude = Double.parseDouble(coordination[0]);
 					double longitude = Double.parseDouble(coordination[1]);
 					LatLng loc = new LatLng(latitude, longitude);
-					markerOptions = new MarkerOptions();
+					MarkerOptions markerOptions = new MarkerOptions();
 					markerOptions.position(loc);
 					markerOptions.title("" + latitude + ", " + longitude);
 
@@ -114,7 +116,8 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 					map.animateCamera(CameraUpdateFactory
 							.newLatLngZoom(loc, 13));
 				}
-				new GeocoderTask().execute(location);
+				else
+					new GeocoderTask().execute(location);
 
 			}
 
@@ -168,7 +171,6 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 
 		@Override
 		protected List<Address> doInBackground(String... locationName) {
-			Geocoder geocoder = new Geocoder(getBaseContext());
 			List<Address> addresses = null;
 
 			try {
@@ -200,7 +202,7 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 				Address address = (Address) addresses.get(i);
 
 				// Creating an instance of GeoPoint, to display in Google Map
-				latLng = new LatLng(address.getLatitude(),
+				LatLng latLng = new LatLng(address.getLatitude(),
 						address.getLongitude());
 
 				String addressText = String.format(
@@ -209,7 +211,7 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 								.getAddressLine(0) : "", address
 								.getCountryName());
 
-				markerOptions = new MarkerOptions();
+				MarkerOptions markerOptions = new MarkerOptions();
 				markerOptions.position(latLng);
 				markerOptions.title(addressText);
 
@@ -267,12 +269,22 @@ public class MapActivity extends Activity implements OnMyLocationChangeListener 
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
 
-		LatLng latLng = new LatLng(latitude, longitude);
-
-		map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+		currentLocation = new LatLng(latitude, longitude);
+		if(firstLaunch){
+			map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+			firstLaunch = false;
+		}
 		
+	}
 
-		
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+		if(searchMarkers.contains(marker)){
+			
+		}
+		else if(placeItMarkers.contains(marker)){
+			
+		}
 	}
 
 }
