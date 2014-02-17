@@ -37,17 +37,5 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, ListViewActivity.class);
 		startActivity(intent);
 	}
-	
-	public void testClick(View view) {
-		Location x = new Location("stuff"); 
-		x.setLatitude(33); 
-		x.setLongitude(-100); 
-		PlaceIt p = new PlaceIt("some text", "title", x);
-		p.setRecurring(true); 
-		p.setRecurringIntervalWeeks(2); 
-		PlaceItList.save(p); 
-		
-		PlaceItNotification.notify(this.getApplicationContext(), p.getId());
-	}
 
 }
