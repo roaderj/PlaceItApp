@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000" >
+    
+    <TextView 
+        android:id="@+id/loginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/placeit"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"/>
+    
+    <TextView
+        android:id="@+id/userID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/userID"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="80dp"
+        
+        />
+
+    <TextView
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_below="@id/userID"
+        android:layout_marginTop="20dp"
+        android:layout_alignLeft="@id/userID"
+         />
+    <EditText
+        android:id="@+id/IDBox"
+        android:layout_width="100dp"
+        android:layout_height="20sp"
+        android:hint="ID"
+        android:layout_alignLeft="@id/userID"
+        android:layout_alignBottom="@id/userID"
+        android:layout_marginLeft="40dp" 
+        />
+
+    <EditText
+        android:id="@+id/PWBox"
+        android:layout_width="100dp"
+        android:layout_height="20sp"
+        android:hint="Password"
+        android:layout_below="@id/IDBox"
+        android:layout_alignLeft="@id/userID"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp" />
+    
+    <Button 
+        android:id="@+id/logInBtn"
+        android:text="@string/logIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:textColor="#FFFFFF"/>
+
+</RelativeLayout>
