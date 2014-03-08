@@ -30,4 +30,6 @@
  	<string name="userID">ID</string>
  	<string name="password">PW</string>
  	<string name="logIn">log in</string>
+ 	<string name="stuff">stuff</string>
+ 	<string name="category">Category:</string>
 </resources>

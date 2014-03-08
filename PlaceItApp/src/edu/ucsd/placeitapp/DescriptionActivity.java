@@ -29,6 +29,7 @@ public class DescriptionActivity extends Activity {
 		desTextView.setText(placeit.getDescription());
 		// set recurring info
 		TextView schTextView = (TextView) findViewById(R.id.textShowSch);
+		// TODO add category
 		if (placeit.isRecurring() == false)
 			schTextView.setText("Not Recurring");
 		else {
