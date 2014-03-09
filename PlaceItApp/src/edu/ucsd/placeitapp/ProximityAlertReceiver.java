@@ -20,10 +20,8 @@ public class ProximityAlertReceiver extends BroadcastReceiver {
 
 		PlaceIt p = PlaceItList.find(pID);
 		p.setEnabled(false); 
-		if (p.isRecurring()) {
-			p.recur();
-			p.setAlarm(context, true);
-		}
+		p.recur(context); // Will not recur if isRecurring is set to false
+		
 		PlaceItList.save(p); 
 		PlaceItNotification.notify(context, pID); 
 	}

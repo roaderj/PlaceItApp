@@ -1,8 +1,5 @@
 package edu.ucsd.placeitapp;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -27,10 +24,6 @@ public class PlaceItNotification extends BroadcastReceiver {
 
 	/** Identifier for notification action extras. */
 	private static final String BUTTON_TAG = "edu.ucsd.PlaceItApp.Button";
-	
-	public static List<Integer> placeIts = new ArrayList<Integer>(); 
-
-	
 
 	/**
 	 * Shows the notification with repost and discard options. Multiple
@@ -38,8 +31,6 @@ public class PlaceItNotification extends BroadcastReceiver {
 	 */
 	public static void notify(final Context context, final int pID) {
 		final Resources res = context.getResources();
-		
-		placeIts.add(pID); 
 
 		PlaceIt placeIt = PlaceItList.find(pID);
 		final String title = placeIt.getTitle();
@@ -126,18 +117,12 @@ public class PlaceItNotification extends BroadcastReceiver {
 
 		PlaceIt placeIt = PlaceItList.find(pID);
 		if (bundle.get(BUTTON_TAG).equals(R.string.notification_discard)) {
-			if (placeIt.isRecurring()) {
-				//placeIt.recur(); same action as ignoring notification
-				Toast.makeText(context, "Place-it will recur at a later time.",
-						Toast.LENGTH_LONG).show();
-			} else {
-				placeIt.discard();
-				Toast.makeText(context, "Place-it discarded.",
-						Toast.LENGTH_LONG).show();
-			}
+			placeIt.discard(context);
 
+			Toast.makeText(context, "Place-it discarded.", Toast.LENGTH_LONG)
+					.show();
 		} else if (bundle.get(BUTTON_TAG).equals(R.string.notification_repost)) {
-			placeIt.repost();
+			placeIt.repost(context);
 
 			Toast.makeText(context, "Place-it reposted.", Toast.LENGTH_LONG)
 					.show();

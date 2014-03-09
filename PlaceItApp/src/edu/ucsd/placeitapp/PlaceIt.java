@@ -129,15 +129,15 @@ public class PlaceIt {
 		return false;
 	}
 
-	public void repost() {
+	public void repost(Context context) {
 		this.setStartTime(new Timestamp(new Date().getTime() + REPOST_WAIT_TIME));
 		
 		PlaceItList.save(this); 
 	}
 
-	public void discard() {
+	public void discard(Context context) {
 		if (this.isRecurring)
-			this.recur();
+			this.recur(context);
 		else
 			PlaceItList.delete(this);
 	}
@@ -179,12 +179,13 @@ public class PlaceIt {
 
 	}
 
-	public void recur() {
+	public void recur(Context context) {
 		if (this.isRecurring()) {
 			long newTime = this.getStartTime().getTime()
 					+ (this.getRecurringIntervalWeeks() * PlaceIt.RECURRING_INTERVAL);
 
 			this.setStartTime(new Timestamp(newTime));
+			this.setAlarm(context, true); 
 			
 			PlaceItList.save(this); 
 		}

@@ -72,7 +72,7 @@ public class DescriptionActivity extends Activity {
 	// Repost the place-it
 	public void repostPlaceIt(View view) {
 
-		placeit.repost();
+		placeit.repost(this);
 		placeit.setAlarm(this.getApplicationContext(), true);
 		
 		Toast.makeText(this, "Place-it will be reposted in 10 seconds.",
