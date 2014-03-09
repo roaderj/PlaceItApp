@@ -59,7 +59,7 @@
 
     <TextView
         android:id="@+id/textShowSch"
-        android:text="stuff"
+        android:text="@string/stuff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/textViewSch"
@@ -78,18 +78,59 @@
         android:text="@string/description"
         android:textSize="20sp" />
     
-    <TextView
-        android:id="@+id/textShowDes"
-        android:text="stuff"
+	<TextView 
+        android:id="@+id/textShowCate3"
+        android:text="@string/stuff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/textViewSch"
+        android:layout_toRightOf="@id/textViewDes"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp" />
+	
+	<TextView 
+        android:id="@+id/textShowCate2"
+        android:text="@string/stuff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/textShowCate3"
+        android:layout_toRightOf="@id/textViewDes"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp" />
+
+	<TextView 
+        android:id="@+id/textShowCate1"
+        android:text="@string/stuff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/textShowCate2"
+        android:layout_toRightOf="@id/textViewDes"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp" />
+	
+    <TextView 
+        android:id="@+id/textViewCate"
+        android:text="@string/category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textShowCate1"
+        android:layout_alignRight="@id/textViewDes"
+        android:textSize="20sp" />
+    
+    <TextView
+        android:id="@+id/textShowDes"
+        android:text="@string/stuff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/textViewCate"
         android:layout_marginBottom="16dp"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/textViewDes"
         android:layout_toRightOf="@id/textViewDes"
         android:layout_marginLeft="5dp"
         android:textSize="20sp" />
+    
+
 
 
 </RelativeLayout>
