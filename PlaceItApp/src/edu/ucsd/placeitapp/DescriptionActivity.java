@@ -44,13 +44,12 @@ public class DescriptionActivity extends Activity {
 		if (placeit.isEnabled()) {
 			repost.setEnabled(false);
 		}
+
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-
-
 	}
 
 	@Override
@@ -62,8 +61,8 @@ public class DescriptionActivity extends Activity {
 
 	// Delete the current place-it
 	public void deletePlaceIt(View view) {
-		
 		PlaceItList.delete(placeit);
+		
 		Toast.makeText(this, "Place-it was deleted.", Toast.LENGTH_LONG).show();
 		
 		finish();

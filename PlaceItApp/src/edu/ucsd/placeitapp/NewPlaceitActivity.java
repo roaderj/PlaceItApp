@@ -14,6 +14,7 @@ import android.widget.EditText;
 public class NewPlaceitActivity extends Activity {
 
 	private Location location;
+	PlaceItFactory factory; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,8 @@ public class NewPlaceitActivity extends Activity {
 		location.setLatitude(intent.getDoubleExtra("latitude", 0));
 		location.setLongitude(intent.getDoubleExtra("longitude", 0));
 		Log.d("",""+location.getLatitude()+","+location.getLongitude());
+		
+		factory = new PlaceItFactory(); 
 	}
 
 	@Override
@@ -39,6 +42,9 @@ public class NewPlaceitActivity extends Activity {
 	}
 	// Create a new place-it with the info entered
 	public void createPlaceIt(View view) {
+		
+		Bundle factoryData = new Bundle(); 
+		
 		CheckBox check = (CheckBox) findViewById(R.id.checkBoxSch);
 		EditText editName = (EditText) findViewById(R.id.editName);
 		EditText editDes = (EditText) findViewById(R.id.editDes);
@@ -54,8 +60,10 @@ public class NewPlaceitActivity extends Activity {
 		}
 		String name = editName.getText().toString();
 		String des = editDes.getText().toString();
+
+		
 		// time empty error
-		int time = 0;
+		int time = -1;
 		if (check.isChecked()) {
 			if (editTime.getText().length() == 0) {
 				dlgAlert.setMessage("Please enter a recurring time");
@@ -75,14 +83,18 @@ public class NewPlaceitActivity extends Activity {
 			}
 		}
 		
-		PlaceIt placeit; 
-		if (check.isChecked())
-			placeit = new PlaceIt(name, des, location, true, time); 
-		else
-			placeit = new PlaceIt(name, des, location); 
-		
+		factoryData.putString(PlaceItFactory.PLACEIT_TITLE, name); 
+		factoryData.putString(PlaceItFactory.PLACEIT_DESCRIPTION, des); 
+		factoryData.putBoolean(PlaceItFactory.PLACEIT_IS_RECURRING, check.isChecked());
+		factoryData.putInt(PlaceItFactory.PLACEIT_RECURRING_INTERVAL, time);
+		factoryData.putDouble(PlaceItFactory.PLACEIT_LONGITUDE, location.getLongitude()); 
+		factoryData.putDouble(PlaceItFactory.PLACEIT_LATITUDE, location.getLatitude()); 
+
+		PlaceIt placeit = factory.create(PlaceIts.LOCATION, factoryData); 
+
 		PlaceItList.save(placeit); 
 		placeit.setAlarm(this.getApplicationContext(), true);
+
 		finish();
 	}
 }

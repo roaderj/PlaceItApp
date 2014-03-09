@@ -257,9 +257,13 @@ public class MapActivity extends Activity implements
 	private void loadMarkers() {
 		erasePlaceItMarkers();
 		placeItMarkers = new ArrayList<Marker>();
-		for (int i = 0; i < placeItList.size(); i++) {
-			Location loc = placeItList.get(i).getLocation();
-			String title = placeItList.get(i).getTitle();
+		for (PlaceIt p : placeItList) {
+//			if (!(p instanceof LocationPlaceIt))
+//				continue; 
+//			
+//			Location loc = ((LocationPlaceIt) p).getLocation();
+			Location loc = p.getLocation();
+			String title = p.getTitle();
 			MarkerOptions marker = new MarkerOptions();
 			marker.position(new LatLng(loc.getLatitude(), loc.getLongitude()));
 			marker.title(title);
