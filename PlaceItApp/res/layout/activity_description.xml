@@ -14,18 +14,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/back"
-        android:onClick="back" />
+        android:onClick="back"
+        android:text="@string/back" />
 
     <Button
         android:id="@+id/buttonDel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginLeft="50dp"
-        android:text="@string/delete"
-        android:onClick="deletePlaceIt" />
+        android:onClick="deletePlaceIt"
+        android:text="@string/delete" />
 
     <Button
         android:id="@+id/buttonRep"
@@ -34,8 +34,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="50dp"
-        android:text="@string/repost"
-        android:onClick="repostPlaceIt" />
+        android:onClick="repostPlaceIt"
+        android:text="@string/repost" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -47,28 +47,6 @@
         android:textSize="23sp" />
 
     <TextView
-        android:id="@+id/textViewSch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/buttonDel"
-        android:layout_marginBottom="16dp"
-		android:layout_alignParentLeft="true"
-		android:layout_marginLeft="40dp"
-        android:text="@string/schedule"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/textShowSch"
-        android:text="@string/stuff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/textViewSch"
-        android:layout_alignBottom="@id/textViewSch"
-        android:layout_toRightOf="@id/textViewSch"
-        android:layout_marginLeft="5dp"
-        android:textSize="20sp" />
-    
-    <TextView
         android:id="@+id/textViewDes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,60 +55,18 @@
         android:layout_marginTop="18dp"
         android:text="@string/description"
         android:textSize="20sp" />
-    
-	<TextView 
-        android:id="@+id/textShowCate3"
-        android:text="@string/stuff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/textViewSch"
-        android:layout_toRightOf="@id/textViewDes"
-        android:layout_marginLeft="5dp"
-        android:textSize="20sp" />
-	
-	<TextView 
-        android:id="@+id/textShowCate2"
-        android:text="@string/stuff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/textShowCate3"
-        android:layout_toRightOf="@id/textViewDes"
-        android:layout_marginLeft="5dp"
-        android:textSize="20sp" />
 
-	<TextView 
-        android:id="@+id/textShowCate1"
-        android:text="@string/stuff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/textShowCate2"
-        android:layout_toRightOf="@id/textViewDes"
-        android:layout_marginLeft="5dp"
-        android:textSize="20sp" />
-	
-    <TextView 
-        android:id="@+id/textViewCate"
-        android:text="@string/category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/textShowCate1"
-        android:layout_alignRight="@id/textViewDes"
-        android:textSize="20sp" />
-    
     <TextView
         android:id="@+id/textShowDes"
-        android:text="@string/stuff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/textViewCate"
-        android:layout_marginBottom="16dp"
+        android:layout_above="@id/buttonDel"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/textViewDes"
-        android:layout_toRightOf="@id/textViewDes"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/textViewDes"
+        android:text="@string/stuff"
         android:textSize="20sp" />
-    
-
-
 
 </RelativeLayout>

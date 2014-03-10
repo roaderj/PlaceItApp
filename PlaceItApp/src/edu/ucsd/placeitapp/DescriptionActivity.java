@@ -28,20 +28,7 @@ public class DescriptionActivity extends Activity {
 		nameTextView.setText(placeit.getTitle());
 		// set description
 		TextView desTextView = (TextView) findViewById(R.id.textShowDes);
-		desTextView.setText(placeit.getDescription());
-		// set recurring info
-		TextView schTextView = (TextView) findViewById(R.id.textShowSch);
-		// TODO add category
-		if (placeit.isRecurring() == false)
-			schTextView.setText("Not Recurring");
-		else {
-			int time = placeit.getRecurringIntervalWeeks();
-			if (time <= 1)
-				schTextView.setText(time + " minute");
-			else
-				schTextView.setText(time + " minutes");
-		}
-
+		desTextView.setText(placeit.toString());
 		Button repost = (Button) findViewById(R.id.buttonRep);
 		if (placeit.isEnabled()) {
 			repost.setEnabled(false);
