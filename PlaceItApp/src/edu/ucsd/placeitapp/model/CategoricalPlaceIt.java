@@ -19,6 +19,10 @@ public class CategoricalPlaceIt extends PlaceIt {
 		
 		this.tags = tags; 
 	}
+	
+	public CategoricalPlaceIt() {
+		this(0, "", "", null, null, false, 0, false);
+	}
 		
 	public void setTags(String[] tags) {
 		this.tags = tags; 

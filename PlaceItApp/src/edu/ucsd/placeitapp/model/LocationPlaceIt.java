@@ -25,6 +25,10 @@ public class LocationPlaceIt extends PlaceIt {
 		this.location = location; 
 		
 	}
+	
+	public LocationPlaceIt() {
+		this(0, "", "", null, null, false, 0, false);
+	}
 
 	public Location getLocation() {
 		return this.location;

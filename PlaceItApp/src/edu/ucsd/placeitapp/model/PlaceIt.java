@@ -53,6 +53,10 @@ public class PlaceIt {
 	public PlaceIt(String title, String description, Location location) {
 		this(title, description, location, false, -1);
 	}
+	
+	public PlaceIt() {
+		this("", "", null);
+	}
 
 	public void setId(int id) {
 		this.id = id;
