@@ -5,6 +5,8 @@ import com.robotium.solo.Solo;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.RenamingDelegatingContext;
 import edu.ucsd.placeitapp.*;
+import edu.ucsd.placeitapp.model.PlaceItDBHelper;
+import edu.ucsd.placeitapp.model.PlaceItList;
 
 public class MapTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	private Solo solo;

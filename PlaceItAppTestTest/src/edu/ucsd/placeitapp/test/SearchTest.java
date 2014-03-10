@@ -10,6 +10,8 @@ import android.test.RenamingDelegatingContext;
 import android.widget.Button;
 import android.widget.EditText;
 import edu.ucsd.placeitapp.*;
+import edu.ucsd.placeitapp.model.PlaceItDBHelper;
+import edu.ucsd.placeitapp.model.PlaceItList;
 
 public class SearchTest extends ActivityInstrumentationTestCase2<MapActivity> {
 	

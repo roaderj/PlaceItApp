@@ -4,6 +4,8 @@ import android.location.Location;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import edu.ucsd.placeitapp.*;
+import edu.ucsd.placeitapp.model.PlaceItDBHelper;
+import edu.ucsd.placeitapp.model.PlaceItList;
 
 public class DescriptionTest extends AndroidTestCase {
 
