@@ -3,6 +3,7 @@ package edu.ucsd.placeitapp;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ucsd.placeitapp.model.PlaceIt;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

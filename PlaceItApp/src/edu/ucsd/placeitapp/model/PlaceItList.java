@@ -1,10 +1,11 @@
-package edu.ucsd.placeitapp;
+package edu.ucsd.placeitapp.model;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import edu.ucsd.placeitapp.PlaceItNotification;
 import android.content.Context;
 
 public class PlaceItList extends Observable {

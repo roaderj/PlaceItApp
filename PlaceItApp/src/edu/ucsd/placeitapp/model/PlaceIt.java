@@ -1,9 +1,12 @@
-package edu.ucsd.placeitapp;
+package edu.ucsd.placeitapp.model;
 
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import edu.ucsd.placeitapp.AlarmReceiver;
+import edu.ucsd.placeitapp.MainActivity;
+import edu.ucsd.placeitapp.ProximityAlertReceiver;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;

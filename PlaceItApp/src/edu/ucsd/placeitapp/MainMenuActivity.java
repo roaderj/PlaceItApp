@@ -1,5 +1,7 @@
 package edu.ucsd.placeitapp;
 
+import edu.ucsd.placeitapp.model.PlaceItDBHelper;
+import edu.ucsd.placeitapp.model.PlaceItList;
 import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;

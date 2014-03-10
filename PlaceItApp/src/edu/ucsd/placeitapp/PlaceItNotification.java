@@ -1,5 +1,7 @@
 package edu.ucsd.placeitapp;
 
+import edu.ucsd.placeitapp.model.PlaceIt;
+import edu.ucsd.placeitapp.model.PlaceItList;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;

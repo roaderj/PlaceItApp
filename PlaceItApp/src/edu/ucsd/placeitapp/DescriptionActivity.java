@@ -1,5 +1,7 @@
 package edu.ucsd.placeitapp;
 
+import edu.ucsd.placeitapp.model.PlaceIt;
+import edu.ucsd.placeitapp.model.PlaceItList;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package edu.ucsd.placeitapp;
+package edu.ucsd.placeitapp.model;
 
 import java.sql.Timestamp;
 

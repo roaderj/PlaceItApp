@@ -3,6 +3,8 @@ package edu.ucsd.placeitapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ucsd.placeitapp.model.PlaceIt;
+import edu.ucsd.placeitapp.model.PlaceItList;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;

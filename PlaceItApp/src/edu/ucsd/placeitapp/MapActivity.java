@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import edu.ucsd.placeitapp.model.PlaceIt;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
