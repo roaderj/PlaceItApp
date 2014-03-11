@@ -9,7 +9,7 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/userField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -19,20 +19,10 @@
         android:textSize="23sp" />
 
     <Button
-        android:id="@+id/buttonMap"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/textView1"
-        android:layout_marginTop="50dp"
-        android:text="@string/map" 
-        android:onClick="goToMap" />
-
-    <Button
         android:id="@+id/buttonList"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/buttonMap"
+        android:layout_below="@+id/buttonMap"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:text="@string/list"
@@ -46,5 +36,24 @@
         android:layout_alignParentRight="true"
         android:text="@string/help" />
 
+    <Button
+        android:id="@+id/buttonMap"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonList"
+        android:layout_below="@+id/userField"
+        android:layout_marginTop="30dp"
+        android:onClick="goToMap"
+        android:text="@string/map" />
+
+    <Button
+        android:id="@+id/createCategorical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonHelp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="@string/createCategorical"
+        android:onClick="createCategorical" />
 
 </RelativeLayout>

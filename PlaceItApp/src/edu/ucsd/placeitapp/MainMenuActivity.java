@@ -39,5 +39,9 @@ public class MainMenuActivity extends Activity {
 		Intent intent = new Intent(this, ListViewActivity.class);
 		startActivity(intent);
 	}
+	
+	public void createCategorical(View view) {
+		
+	}
 
 }

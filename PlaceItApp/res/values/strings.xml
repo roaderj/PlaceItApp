@@ -19,7 +19,7 @@
     <string name="notification_discard">Discard</string>
     <string name="newplaceit">New Place-It</string>
     <string name="name">Name:</string>
-    <string name="description">Description:</string>	
+    <string name="description">Description:</string>
     <string name="create">Create</string>
     <string name="schedule">Schedule：</string>
     <string name="enterDes">Enter Description</string>
@@ -27,9 +27,14 @@
     <string name="weeks"># of minutes</string>
     <string name="repost">Repost</string>
     <string name="delete">Delete</string>
- 	<string name="userID">ID</string>
- 	<string name="password">PW</string>
- 	<string name="logIn">log in</string>
- 	<string name="stuff">stuff</string>
- 	<string name="category">Category:</string>
+    <string name="userID">User</string>
+    <string name="password">Password</string>
+    <string name="stuff">stuff</string>
+    <string name="category">Category:</string>
+    <string name="createCategorical">Create Categorical Place-It</string>
+    <string name="signUp">Sign up</string>
+    <string name="login">Log-in</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="pass_confirm">Confirm Password</string>
+
 </resources>
