@@ -18,83 +18,84 @@ import com.google.appengine.api.datastore.Entity;
 @SuppressWarnings("serial")
 public class UserServlet extends BaseServlet {
 
-  private static final Logger logger = Logger.getLogger(UserServlet.class.getCanonicalName());
-  
-  /**
-   * Get the entities in JSON format.
-   */
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-	  
-    logger.log(Level.INFO, "Obtaining users");
+	private static final Logger logger = Logger.getLogger(UserServlet.class
+			.getCanonicalName());
 
-	super.doGet(req, resp);
+	/**
+	 * Get the entities in JSON format.
+	 */
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 
-    String searchFor = req.getParameter("q");
-    PrintWriter out = resp.getWriter();
-    Iterable<Entity> entities = null;
-    if (searchFor == null || searchFor.equals("") || searchFor == "*") {
-      entities = User.getAllUsers("User"); 
-      out.println(Util.writeJSON(entities));
-    } else {
-      Entity user = User.getUser(searchFor); 
-      if (user != null) {
-        Set<Entity> result = new HashSet<Entity>();
-        result.add(user);
-        out.println(Util.writeJSON(result));
-      }
-    }
-  }
+		logger.log(Level.INFO, "Obtaining users");
 
-  /**
-   * Create the entity and persist it.
-   */
-  @Override
-  protected void doPut(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    logger.log(Level.INFO, "Creating Product");
-    PrintWriter out = resp.getWriter();
+		super.doGet(req, resp);
 
-    String username = req.getParameter("name");
-    String password = req.getParameter("password");
-    try {
-      User.createUser(username, password);
-    } catch (Exception e) {
-      String msg = Util.getErrorMessage(e);
-      out.print(msg);
-    }
-  }
+		String searchFor = req.getParameter("username");
+		PrintWriter out = resp.getWriter();
+		Iterable<Entity> entities = null;
+		if (searchFor == null || searchFor.equals("") || searchFor == "*") {
+			entities = User.getAllUsers("User");
+			out.println(Util.writeJSON(entities));
+		} else {
+			Entity user = User.getUser(searchFor);
+			if (user != null) {
+				Set<Entity> result = new HashSet<Entity>();
+				result.add(user);
+				out.println(Util.writeJSON(result));
+			}
+		}
+	}
 
-  /**
-   * Delete the product entity
-   */
-  @Override
-  protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    String user = req.getParameter("name");
-    PrintWriter out = resp.getWriter();
-    try{    	
-    	out.println(User.deleteUser(user));
-    } catch(Exception e) {
-    	out.println(Util.getErrorMessage(e));
-    }    
-  }
+	/**
+	 * Create the entity and persist it.
+	 */
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		logger.log(Level.INFO, "Creating User");
+		PrintWriter out = resp.getWriter();
 
-  /**
-   * Redirect the call to doDelete or doPut method
-   */
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    String action = req.getParameter("action");
-    if (action.equalsIgnoreCase("delete")) {
-      doDelete(req, resp);
-      return;
-    } else if (action.equalsIgnoreCase("put")) {
-      doPut(req, resp);
-      return;
-    }
-  }
+		String username = req.getParameter("name");
+		String password = req.getParameter("password");
+		try {
+			User.createUser(username, password);
+		} catch (Exception e) {
+			String msg = Util.getErrorMessage(e);
+			out.print(msg);
+		}
+	}
+
+	/**
+	 * Delete the user entity
+	 */
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String user = req.getParameter("name");
+		PrintWriter out = resp.getWriter();
+		try {
+			out.println(User.deleteUser(user));
+		} catch (Exception e) {
+			out.println(Util.getErrorMessage(e));
+		}
+	}
+
+	/**
+	 * Redirect the call to doDelete or doPut method
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String action = req.getParameter("action");
+		if (action.equalsIgnoreCase("delete")) {
+			doDelete(req, resp);
+			return;
+		} else if (action.equalsIgnoreCase("put")) {
+			doPut(req, resp);
+			return;
+		}
+	}
 
 }
