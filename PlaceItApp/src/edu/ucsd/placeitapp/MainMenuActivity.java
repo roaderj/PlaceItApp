@@ -1,6 +1,7 @@
 package edu.ucsd.placeitapp;
 
-import edu.ucsd.placeitapp.model.PlaceItDBHelper;
+import edu.ucsd.placeitapp.model.EntityDb;
+import edu.ucsd.placeitapp.model.PlaceItDb;
 import edu.ucsd.placeitapp.model.PlaceItList;
 import android.location.Location;
 import android.os.Bundle;
@@ -12,15 +13,13 @@ import android.view.View;
 public class MainMenuActivity extends Activity {
 	public final static String PLACEIT_ID = "edu.ucsd.placeitapp.PLACEIT_ID";
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		PlaceItDBHelper.setInstance(this.getApplicationContext());
+		EntityDb.setInstance(this.getApplicationContext());
 		PlaceItList.setInstance(this.getApplicationContext()); 
-		
 	}
 
 	@Override

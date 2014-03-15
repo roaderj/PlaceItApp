@@ -39,7 +39,7 @@ public class PlaceItFactory {
 		case CATEGORICAL:
 		case CATEGORICAL_RECURRING:
 			String[] tags = data.getStringArray(PLACEIT_TAGS);
-			return new CategoricalPlaceIt(pID, title, description, tags,
+			return new CategoricalPlaceIt(pID, title, description, null,
 					startTime, isRecurring, recurringInterval, isEnabled);
 		default:
 			return null;
