@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.location.Location;
 
 /* Needs PlaceItDBHelper to be fully functional */ 
 

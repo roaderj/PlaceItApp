@@ -1,24 +1,9 @@
 package edu.ucsd.placeitapp;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -28,25 +13,28 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	public final static String PLACEIT_ID = "edu.ucsd.placeitapp.PLACEIT_ID";
+		
+	public static final String TAG = "MainActivity Debug";
 	
-	public static final String GAE_BASE = "http://placeits33.appspot.com/";
+	private Activity currentActivity; 
+	private EditText userField; 
+	private EditText passField; 
 	
-	public static final String USER_SUFFIX = "user"; 
-	public static final String USER_QUERY = "?username="; 
-	
-	public static final String TAG = "MAIN_ACTIVITY_DEBUG"; 
+	private ProgressDialog progressDialog;
 
-	private boolean validUser = false; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		userField = (EditText) findViewById(R.id.IDBox); 
+		passField = (EditText) findViewById(R.id.PWBox); 
+		currentActivity = this; 
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -58,67 +46,31 @@ public class MainActivity extends Activity {
 	
 	public void logIn(View v) {
 
-		String username = ((EditText) this.findViewById(R.id.IDBox))
-				.getText().toString();
-		String password = ((EditText) this.findViewById(R.id.PWBox))
-				.getText().toString();
+		String username = userField.getText().toString();
+		String password = passField.getText().toString();
 		
-		if (validateUser(username, password)) {
-			Intent intent = new Intent(this, MainMenuActivity.class); 
-			startActivity(intent); 
-		} else {
-			Toast.makeText(this, "Invalid username.", Toast.LENGTH_SHORT).show(); 
-		}
-
+		progressDialog = ProgressDialog.show(this, "Logging in...", "Please wait...", false);
+		new ValidateUserTask().execute(username, password); 
 	}		
 	
-	public boolean validateUser(final String username, final String password) {
-		validUser = false;  
-		Runnable thread = new Runnable() {
-			public void run() {
-				HttpClient client = new DefaultHttpClient();
-				try {
-					
-					String usersURI = MainActivity.GAE_BASE + MainActivity.USER_SUFFIX; 
-					HttpGet request = new HttpGet(usersURI + MainActivity.USER_QUERY + username);
-					HttpResponse getResponse = client.execute(request);
-					
-					String data = EntityUtils.toString(getResponse.getEntity()); 
-					if (data.isEmpty()) {
-						Log.d(TAG, "Username not found"); 
-						return; 
-					}
-					
-					JSONObject user = new JSONObject(data).getJSONArray("data").getJSONObject(0); 
-					
-					if (user.getString("name").equals(username) 
-							&& user.getString("password").equals(password)) {
-						Log.d(TAG, "Valid User"); 
-						validUser = true; 
-					} else {
-						Log.d(TAG, "invalid credentials"); 
-					}
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
+	private class ValidateUserTask extends AsyncTask<String, Void, Boolean> {
+		@Override
+		protected Boolean doInBackground(String... params) {
+			return SyncClient.validateUser(params[0], params[1]);
+		}
 
+		protected void onPostExecute(Boolean isValid) {
+			progressDialog.dismiss();
+			if (isValid) {
+				Toast.makeText(currentActivity, "Welcome!", Toast.LENGTH_SHORT).show(); 
+				Intent intent = new Intent(currentActivity, MainMenuActivity.class); 
+				startActivity(intent); 
+				finish(); 
+			} else {
+				Toast.makeText(currentActivity, "Invalid credentials.", Toast.LENGTH_SHORT).show(); 
 			}
-		};
 
-		Thread t = new Thread(thread);
-		t.start(); 
-		try {
-			t.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} 
-		
-		return validUser; 
+		}
 	}
-
-
 
 }

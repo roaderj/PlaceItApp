@@ -199,5 +199,14 @@ public class PlaceIt {
 	public static List<PlaceIt> all() {
 		return PlaceItDb.getInstance().all();
 	}
+	
+	public String toString() {
+		String text = this.getDescription();
+		if (this.isRecurring())
+			text += "\nRecurring every " + this.getRecurringIntervalWeeks() + " mins";
+		else 
+			text += "\nNot Recurring";
+		return (text);
+	}
 
 }
