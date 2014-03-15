@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -30,7 +32,8 @@ public class MainActivity extends Activity {
 		
 		userField = (EditText) findViewById(R.id.IDBox); 
 		passField = (EditText) findViewById(R.id.PWBox); 
-		currentActivity = this; 
+		currentActivity = this;
+		
 	}
 
 	@Override

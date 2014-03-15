@@ -25,7 +25,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <activity
             android:name="edu.ucsd.placeitapp.MainActivity"
             android:label="@string/app_name"
@@ -81,13 +80,21 @@
             android:exported="true" >
         </receiver>
 
+        <service
+            android:name="edu.ucsd.placeitapp.PlaceItCheckService"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/GoogleMapsKey" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        
+
+        <activity
+            android:name="edu.ucsd.placeitapp.FakeTestingActivity"
+            android:label="@string/title_activity_fake_testing" >
+        </activity>
     </application>
 
 </manifest>
