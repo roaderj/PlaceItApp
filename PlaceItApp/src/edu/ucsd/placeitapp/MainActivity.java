@@ -1,6 +1,6 @@
 package edu.ucsd.placeitapp;
 
-import edu.ucsd.placeitapp.model.PlaceItDBHelper;
+import edu.ucsd.placeitapp.model.EntityDb;
 import edu.ucsd.placeitapp.model.PlaceItList;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,10 +35,9 @@ public class MainActivity extends Activity {
 		passField = (EditText) findViewById(R.id.PWBox); 
 		currentActivity = this; 
 		
+		EntityDb.setInstance(this.getApplicationContext());
 		
-		PlaceItDBHelper.setInstance(this.getApplicationContext());
-		
-		if (PlaceItDBHelper.getInstance().getLoggedInUser() != null) {
+		if (EntityDb.getInstance().getLoggedInUser() != null) {
 			Intent cachedUser = new Intent(this, MainMenuActivity.class); 
 			startActivity(cachedUser); 
 			finish(); 

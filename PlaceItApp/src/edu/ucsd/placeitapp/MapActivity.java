@@ -18,7 +18,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import edu.ucsd.placeitapp.model.LocationPlaceIt;
 import edu.ucsd.placeitapp.model.PlaceIt;
+import edu.ucsd.placeitapp.model.PlaceItList;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -46,7 +48,7 @@ public class MapActivity extends Activity implements
 	private final static double UCSD_LONGITUDE = -117.2357297;
 
 	// list of place-its
-	private ArrayList<PlaceIt> placeItList;
+	private ArrayList<LocationPlaceIt> placeItList;
 	private ArrayList<Marker> placeItMarkers;
 	private ArrayList<Marker> searchMarkers;
 
@@ -181,7 +183,10 @@ public class MapActivity extends Activity implements
 	protected void onResume() {
 		super.onResume();
 		// get all placeits
-		placeItList = (ArrayList<PlaceIt>) PlaceIt.all();
+		placeItList = new ArrayList<LocationPlaceIt>();
+		for (PlaceIt placeIt : PlaceItList.all(LocationPlaceIt.KEY)) {
+			placeItList.add((LocationPlaceIt)placeIt);
+		}
 		// put all placeIts on the map
 		loadMarkers();
 		// set first launch to true so that current location will be centered
@@ -258,7 +263,7 @@ public class MapActivity extends Activity implements
 	private void loadMarkers() {
 		erasePlaceItMarkers();
 		placeItMarkers = new ArrayList<Marker>();
-		for (PlaceIt p : placeItList) {
+		for (LocationPlaceIt p : placeItList) {
 //			if (!(p instanceof LocationPlaceIt))
 //				continue; 
 //			

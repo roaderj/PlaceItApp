@@ -18,44 +18,43 @@ public class PlaceIt {
 	private int id;
 	private String title;
 	private String description;
-	private Location location;
 	private Timestamp startTime;
 	private boolean isRecurring;
 	private int recurringIntervalWeeks; // should be minutes for testing
 	private boolean isEnabled;
+	protected String key;
 
 	public final static long REPOST_WAIT_TIME = 10000; // 10 seconds
 	public final static long RECURRING_INTERVAL = 60000; // 1 minutes
 	public final static long RADIUS = 804; // 804m -> .5 miles
 
-	public PlaceIt(int id, String title, String description, Location location,
+	public PlaceIt(int id, String title, String description,
 			Timestamp startTime, boolean isRecurring,
 			int recurringIntervalWeeks, boolean isEnabled) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		this.location = location;
 		this.startTime = startTime;
 		this.isEnabled = isEnabled;
 		this.isRecurring = isRecurring;
 		this.recurringIntervalWeeks = recurringIntervalWeeks;
-
+		this.key = "PlaceIt";
 	}
 
-	public PlaceIt(String title, String description, Location location,
+	public PlaceIt(String title, String description,
 			boolean isRecurring, int recurringIntervalWeeks) {
 
-		this(-1, title, description, location, new Timestamp(
+		this(-1, title, description, new Timestamp(
 				new Date().getTime()), isRecurring, recurringIntervalWeeks,
 				false);
 	}
 
-	public PlaceIt(String title, String description, Location location) {
-		this(title, description, location, false, -1);
+	public PlaceIt(String title, String description) {
+		this(title, description, false, -1);
 	}
 	
 	public PlaceIt() {
-		this("", "", null);
+		this("", "");
 	}
 
 	public void setId(int id) {
@@ -81,15 +80,6 @@ public class PlaceIt {
 
 	public void setDescription(String description) {
 		this.description = description;
-
-	}
-
-	public Location getLocation() {
-		return this.location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
 
 	}
 
@@ -166,23 +156,23 @@ public class PlaceIt {
 	}
 
 	public void trackLocation(Context context, boolean enable) {
-		int pID = this.getId();
-		Intent locationIntent = new Intent(context,
-				ProximityAlertReceiver.class).putExtra(MainActivity.PLACEIT_ID,
-				pID);
-
-		LocationManager locManager = (LocationManager) context
-				.getSystemService(Context.LOCATION_SERVICE);
-
-		PendingIntent pIntent = PendingIntent.getBroadcast(context, pID,
-				locationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-		if (enable) {
-			locManager.addProximityAlert(this.getLocation().getLatitude(), this
-					.getLocation().getLongitude(), PlaceIt.RADIUS, -1, pIntent); 
-		} else  {
-			locManager.removeProximityAlert(pIntent);
-		}
+//		int pID = this.getId();
+//		Intent locationIntent = new Intent(context,
+//				ProximityAlertReceiver.class).putExtra(MainActivity.PLACEIT_ID,
+//				pID);
+//
+//		LocationManager locManager = (LocationManager) context
+//				.getSystemService(Context.LOCATION_SERVICE);
+//
+//		PendingIntent pIntent = PendingIntent.getBroadcast(context, pID,
+//				locationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//		if (enable) {
+//			locManager.addProximityAlert(this.getLocation().getLatitude(), this
+//					.getLocation().getLongitude(), PlaceIt.RADIUS, -1, pIntent); 
+//		} else  {
+//			locManager.removeProximityAlert(pIntent);
+//		}
 
 	}
 
@@ -198,12 +188,16 @@ public class PlaceIt {
 		}
 	}
 	
+	public String getKey() {
+		return this.key;
+	}
+	
 	public static PlaceIt find(int id) {
-		return PlaceItDBHelper.getInstance().find(id);
+		return PlaceItDb.getInstance().find(id);
 	}
 	
 	public static List<PlaceIt> all() {
-		return PlaceItDBHelper.getInstance().all();
+		return PlaceItDb.getInstance().all();
 	}
 	
 	public String toString() {

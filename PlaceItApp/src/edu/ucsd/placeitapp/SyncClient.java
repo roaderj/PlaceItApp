@@ -16,7 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.ucsd.placeitapp.model.PlaceItDBHelper;
+import edu.ucsd.placeitapp.model.EntityDb;
 
 import android.util.Log;
 
@@ -83,7 +83,7 @@ public class SyncClient {
 					&& user.getString("password").equals(password)) {
 				Log.d(TAG, "Valid User");
 				//Cache new user 
-				PlaceItDBHelper.getInstance().insertUser(username, password, true); 
+				EntityDb.getInstance().insertUser(username, password, true); 
 				return true; 
 			} else {
 				Log.d(TAG, "invalid credentials");
@@ -92,16 +92,16 @@ public class SyncClient {
 
 		} catch (IOException e) {
 			//Check cached database if network errors
-			return PlaceItDBHelper.getInstance().validateUser(username, password); 
+			return EntityDb.getInstance().validateUser(username, password); 
 		} catch (JSONException e) {
 			e.printStackTrace();
 			//If any other kind of error 
-			return PlaceItDBHelper.getInstance().validateUser(username, password); 
+			return EntityDb.getInstance().validateUser(username, password); 
 		}
 
 	}
 
 	public static void logOut() {
-		PlaceItDBHelper.getInstance().logOut(); 
+		EntityDb.getInstance().logOut(); 
 	}
 }
