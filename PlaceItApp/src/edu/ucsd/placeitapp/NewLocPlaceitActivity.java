@@ -15,9 +15,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+/* 
+ * Activity for creating a location place-it. 
+ */
 public class NewLocPlaceitActivity extends Activity {
 
 	private Location location;
+	//Factory to handle PlaceIt creation
 	PlaceItFactory factory; 
 	
 	@Override
@@ -88,6 +92,7 @@ public class NewLocPlaceitActivity extends Activity {
 			}
 		}
 		
+		//Bundle data and create
 		factoryData.putString(PlaceItFactory.PLACEIT_TITLE, name); 
 		factoryData.putString(PlaceItFactory.PLACEIT_DESCRIPTION, des); 
 		factoryData.putBoolean(PlaceItFactory.PLACEIT_IS_RECURRING, check.isChecked());
@@ -97,6 +102,7 @@ public class NewLocPlaceitActivity extends Activity {
 
 		PlaceIt placeit = factory.create(PlaceIts.LOCATION, factoryData); 
 
+		PlaceItList.save(placeit); 
 		PlaceItList.save(placeit); 
 		placeit.setAlarm(this.getApplicationContext(), true);
 

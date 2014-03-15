@@ -16,9 +16,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+/* 
+ * Activity for crating a categorical place-it
+ */
 public class NewCatPlaceitActivity extends Activity {
 
 	private Location location;
+	//Factory to handle PlaceIt creation
 	PlaceItFactory factory; 
 
 	@Override
@@ -34,7 +38,6 @@ public class NewCatPlaceitActivity extends Activity {
 
 		factory = new PlaceItFactory(); 
 
-		addListenerOnSpinnerItemSelection();
 	}
 
 
@@ -45,11 +48,17 @@ public class NewCatPlaceitActivity extends Activity {
 		getMenuInflater().inflate(R.menu.new_placeit, menu);
 		return true;
 	}
-	// Go back to the former activity
+	
+	/*
+	 *  Go back to the former activity
+	 */
 	public void back(View view) {
 		finish();
 	}
-	// Create a new place-it with the info entered
+	
+	/*
+	 *  Create a new place-it with the info entered
+	 */
 	public void createPlaceIt(View view) {
 
 		Bundle factoryData = new Bundle(); 
@@ -114,6 +123,7 @@ public class NewCatPlaceitActivity extends Activity {
 			}
 		}
 
+		//Bundle data and create
 		factoryData.putString(PlaceItFactory.PLACEIT_TITLE, name); 
 		factoryData.putString(PlaceItFactory.PLACEIT_DESCRIPTION, des); 
 		factoryData.putBoolean(PlaceItFactory.PLACEIT_IS_RECURRING, check.isChecked());
@@ -123,16 +133,12 @@ public class NewCatPlaceitActivity extends Activity {
 		PlaceIt placeit = factory.create(PlaceIts.CATEGORICAL, factoryData); 
 
 		PlaceItList.save(placeit); 
+		PlaceItList.save(placeit); 
+
 		placeit.setAlarm(this.getApplicationContext(), true);
 
 		finish(); 
 		
 	}
-
-	private void addListenerOnSpinnerItemSelection() {
-		// TODO Auto-generated method stub
-
-	}
-
 
 }
