@@ -3,6 +3,7 @@ package edu.ucsd.placeitapp.model;
 import java.sql.Timestamp;
 
 import android.content.Context;
+import android.location.Location;
 
 /* Needs PlaceItDBHelper to be fully functional */ 
 
@@ -15,7 +16,7 @@ public class CategoricalPlaceIt extends PlaceIt {
 			int recurringIntervalWeeks, boolean isEnabled) {
 		
 		//super needs to be changed in the future
-		super(id, title, description, null, startTime, isRecurring, recurringIntervalWeeks, isEnabled);
+		super(id, title, description, new Location("location"), startTime, isRecurring, recurringIntervalWeeks, isEnabled);
 		
 		this.tags = tags; 
 	}

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 
 public class PlaceItFactory {
 	public static final String PLACEIT_ID = "id";

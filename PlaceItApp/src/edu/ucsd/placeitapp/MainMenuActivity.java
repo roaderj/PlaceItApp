@@ -41,7 +41,8 @@ public class MainMenuActivity extends Activity {
 	}
 	
 	public void createCategorical(View view) {
-		
+		Intent intent = new Intent(this, NewCatPlaceitActivity.class);
+		startActivity(intent);
 	}
 
 }

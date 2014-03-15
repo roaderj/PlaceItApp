@@ -292,7 +292,7 @@ public class MapActivity extends Activity implements
 		@Override
 		public void onMapClick(LatLng loc) {
 			Intent newPlaceItIntent = new Intent(mapActivityContext,
-					NewPlaceitActivity.class);
+					NewLocPlaceitActivity.class);
 			newPlaceItIntent.putExtra("latitude", loc.latitude);
 			newPlaceItIntent.putExtra("longitude", loc.longitude);
 			startActivity(newPlaceItIntent);
@@ -332,7 +332,7 @@ public class MapActivity extends Activity implements
 	public void onInfoWindowClick(Marker marker) {
 		if (searchMarkers.contains(marker)) {
 			Intent newPlaceItIntent = new Intent(mapActivityContext,
-					NewPlaceitActivity.class);
+					NewLocPlaceitActivity.class);
 			LatLng loc = marker.getPosition();
 			newPlaceItIntent.putExtra("latitude", loc.latitude);
 			newPlaceItIntent.putExtra("longitude", loc.longitude);
