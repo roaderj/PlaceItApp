@@ -29,12 +29,13 @@
         android:onClick="goToList" />
     
     <Button
-        android:id="@+id/buttonHelp"
+        android:id="@+id/buttonLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="@string/help" />
+        android:text="@string/log_out"
+        android:onClick="logOut" />
 
     <Button
         android:id="@+id/buttonMap"
@@ -50,10 +51,10 @@
         android:id="@+id/createCategorical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonHelp"
+        android:layout_above="@+id/buttonLogOut"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:text="@string/createCategorical"
-        android:onClick="createCategorical" />
+        android:layout_marginBottom="33dp"
+        android:onClick="createCategorical"
+        android:text="@string/createCategorical" />
 
 </RelativeLayout>

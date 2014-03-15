@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Location;
+import android.util.Log;
 
 public class PlaceItDBHelper extends SQLiteOpenHelper {
 	private static PlaceItDBHelper instance;
@@ -24,8 +25,14 @@ public class PlaceItDBHelper extends SQLiteOpenHelper {
 	public static final String PLACEIT_IS_ENABLED_COLUMN_NAME = "isEnabled";
 	public static final String PLACEIT_IS_RECURRING_COLUMN_NAME = "isRecurring";
 	public static final String PLACEIT_RECURRING_INTERVAL_WEEKS_COLUMN_NAME = "recurringIntervalWeeks";
+	
+	public static final String USER_TABLE_NAME = "users";
+	public static final String USER_ID_COLUMN = "_id"; 
+	public static final String USER_NAME_COLUMN = "username"; 
+	public static final String USER_LOGGED_IN_COLUMN = "loggedin"; 
+	public static final String USER_PASSWORD_COLUMN = "password"; 
 
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 	public static final String DATABASE_NAME = "PlaceIt.db";
 
 	private PlaceItDBHelper(Context context) {
@@ -44,12 +51,21 @@ public class PlaceItDBHelper extends SQLiteOpenHelper {
 				+ PLACEIT_IS_RECURRING_COLUMN_NAME + " BOOLEAN,"
 				+ PLACEIT_RECURRING_INTERVAL_WEEKS_COLUMN_NAME + " INTEGER"
 				+ ");");
+		
+		db.execSQL("CREATE TABLE " + USER_TABLE_NAME + " (" 
+				+ USER_ID_COLUMN + " INTEGER PRIMARY KEY,"
+				+ USER_NAME_COLUMN + " TEXT," 
+				+ USER_PASSWORD_COLUMN + " TEXT,"
+				+ USER_LOGGED_IN_COLUMN + " BOOLEAN" 
+				+ ");"); 
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// This database is only a cache for online data, so its upgrade policy
 		// is
 		// to simply to discard the data and start over
+		db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME); 
+		db.execSQL("DROP TABLE IF EXISTS " + PLACEIT_TABLE_NAME); 
 		onCreate(db);
 	}
 
@@ -57,6 +73,66 @@ public class PlaceItDBHelper extends SQLiteOpenHelper {
 		onUpgrade(db, oldVersion, newVersion);
 	}
 
+	public void insertUser(String username, String password, boolean loggedIn) {
+		//Currently only stores one user 
+		SQLiteDatabase db = getWritableDatabase();
+		
+		db.delete(USER_TABLE_NAME, null, null); 
+		
+		ContentValues newUser = new ContentValues(); 
+		newUser.put(USER_NAME_COLUMN, username); 
+		newUser.put(USER_PASSWORD_COLUMN, password); 
+		newUser.put(USER_LOGGED_IN_COLUMN, loggedIn); 
+		long id = db.insert(USER_TABLE_NAME, null, newUser); 
+		Log.d("DBHELPER", "Inserted"); 
+	}
+
+	public String getLoggedInUser() {
+		SQLiteDatabase db = getWritableDatabase(); 
+		Cursor cursor = db.query(USER_TABLE_NAME, null, USER_LOGGED_IN_COLUMN + "=" + 1, null, null, null, null);
+		if (cursor.getCount() == 0) {
+			return null; 
+		}
+		Log.d("DBDEBUG", "" + cursor.getCount()); 
+
+		cursor.moveToFirst(); 
+		return cursor.getString(cursor.getColumnIndex(USER_NAME_COLUMN)); 
+	}
+
+	public boolean validateUser(String username, String password) {
+		SQLiteDatabase db = getWritableDatabase();
+		Cursor cursor = db.query(USER_TABLE_NAME, null, USER_NAME_COLUMN + "=" + "'"+  username + "'", 
+				null, null, null, null); 
+		if (cursor.getCount() == 0) {
+			Log.d("DBHELER", "None found"); 
+			return false; 
+		} 
+		
+		cursor.moveToFirst(); 
+		for (int i = 0; i < cursor.getCount(); ++i) {
+			String passCheck = cursor.getString(
+					cursor.getColumnIndex(USER_PASSWORD_COLUMN)); 
+			Log.d("DBHELPER", passCheck); 
+			if (passCheck.equals(password)) {
+				insertUser(username, password, true); 
+				return true; 
+			}
+		}
+		return false; 
+	}
+
+	public void logOut() {
+		SQLiteDatabase db = getWritableDatabase(); 
+		Cursor cursor = db.query(USER_TABLE_NAME, null, USER_LOGGED_IN_COLUMN + "=" + 1, null, null, null, null);
+
+		Log.d("DBDEBUG", "" + cursor.getCount()); 
+
+		cursor.moveToFirst(); 
+		String username = cursor.getString(cursor.getColumnIndex(USER_NAME_COLUMN)); 
+		String password = cursor.getString(cursor.getColumnIndex(USER_PASSWORD_COLUMN)); 
+		insertUser(username, password, false); 
+	}
+	
 	private PlaceIt createPlaceItFromRow(Cursor cursor) {
 		int id = cursor.getInt(cursor.getColumnIndex(PLACEIT_ID_COLUMN_NAME));
 

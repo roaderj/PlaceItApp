@@ -38,6 +38,7 @@
     <string name="login">Log-in</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="pass_confirm">Confirm Password</string>
+    <string name="log_out">Log-out</string>
 
     <string-array name="category_arrays">
         <item></item>

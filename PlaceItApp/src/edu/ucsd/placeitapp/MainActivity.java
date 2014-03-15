@@ -1,5 +1,7 @@
 package edu.ucsd.placeitapp;
 
+import edu.ucsd.placeitapp.model.PlaceItDBHelper;
+import edu.ucsd.placeitapp.model.PlaceItList;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -26,11 +28,22 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+ 
 		setContentView(R.layout.activity_login);
-		
+
 		userField = (EditText) findViewById(R.id.IDBox); 
 		passField = (EditText) findViewById(R.id.PWBox); 
 		currentActivity = this; 
+		
+		
+		PlaceItDBHelper.setInstance(this.getApplicationContext());
+		
+		if (PlaceItDBHelper.getInstance().getLoggedInUser() != null) {
+			Intent cachedUser = new Intent(this, MainMenuActivity.class); 
+			startActivity(cachedUser); 
+			finish(); 
+		}
+
 	}
 
 	@Override

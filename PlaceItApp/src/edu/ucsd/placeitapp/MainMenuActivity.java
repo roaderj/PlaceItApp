@@ -2,7 +2,6 @@ package edu.ucsd.placeitapp;
 
 import edu.ucsd.placeitapp.model.PlaceItDBHelper;
 import edu.ucsd.placeitapp.model.PlaceItList;
-import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -18,7 +17,6 @@ public class MainMenuActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		PlaceItDBHelper.setInstance(this.getApplicationContext());
 		PlaceItList.setInstance(this.getApplicationContext()); 
 		
 	}
@@ -43,6 +41,13 @@ public class MainMenuActivity extends Activity {
 	public void createCategorical(View view) {
 		Intent intent = new Intent(this, NewCatPlaceitActivity.class);
 		startActivity(intent);
+	}
+	
+	public void logOut(View v) {
+		SyncClient.logOut(); 
+		Intent returnSignUp = new Intent(this, MainActivity.class); 
+		startActivity(returnSignUp); 
+		finish(); 
 	}
 
 }
