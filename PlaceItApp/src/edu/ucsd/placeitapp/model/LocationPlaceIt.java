@@ -43,8 +43,6 @@ public class LocationPlaceIt extends PlaceIt {
 	@Override
 	public void trackLocation(Context context, boolean enable) {
 
-		/* Directly copied from PlaceIt */
-
 		int pID = this.getId();
 		Intent locationIntent = new Intent(context,
 				ProximityAlertReceiver.class).putExtra(MainActivity.PLACEIT_ID,

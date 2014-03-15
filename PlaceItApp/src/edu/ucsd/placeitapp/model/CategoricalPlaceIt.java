@@ -51,13 +51,8 @@ public class CategoricalPlaceIt extends PlaceIt {
 				+ "\n\n\nCategories: " 
 				+ "\n");
 		
-		for (int i = 0; i < tags.size() - 1; ++i) {
-			fullDescription += tags.get(i) + ", ";
-		}
-		
-		if (tags.size() > 0) {
-			fullDescription += tags.get(tags.size() - 1);
-		}
+		for (String tag : getTags())
+			fullDescription += tag + "\n";
 				
 		return fullDescription;
 	}

@@ -16,6 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/*
+ * Displays the contents of a tab. 
+ */
 public class ListTabFragment extends Fragment {
 
 	List<PlaceIt> placeIts;
@@ -43,6 +46,7 @@ public class ListTabFragment extends Fragment {
 
 		view = (ListView) this.getView().findViewById(R.id.activeView);
 
+		//Create adapter and go to Description Page on click
 		aAdapter = new PlaceItAdapter(this.getActivity(), placeIts);
 		view.setAdapter(aAdapter);
 		view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,6 +70,9 @@ public class ListTabFragment extends Fragment {
 		return rootView;
 	}
 
+	/* 
+	 * Adapter that populates the ListView for fragment
+	 */
 	private class PlaceItAdapter extends ArrayAdapter<PlaceIt> {
 		Context context;
 		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();

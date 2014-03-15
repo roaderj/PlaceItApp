@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/* 
+ * Activity for displaying the description page for the placeit. 
+ */
 public class DescriptionActivity extends Activity {
 
 	private PlaceIt placeit;
@@ -48,7 +51,9 @@ public class DescriptionActivity extends Activity {
 		return true;
 	}
 
-	// Delete the current place-it
+	/*
+	 *  Delete the current place-it (button action)
+	 */
 	public void deletePlaceIt(View view) {
 		PlaceItList.delete(placeit);
 		
@@ -57,7 +62,9 @@ public class DescriptionActivity extends Activity {
 		finish();
 	}
 
-	// Repost the place-it
+	/*
+	 *  Repost the place-it (button action)
+	 */
 	public void repostPlaceIt(View view) {
 
 		placeit.repost(this);
@@ -69,7 +76,9 @@ public class DescriptionActivity extends Activity {
 		finish();
 	}
 
-	// Go back to the former activity
+	/*
+	 *  Go back to the former activity (button action)
+	 */
 	public void back(View view) {
 		finish();
 	}

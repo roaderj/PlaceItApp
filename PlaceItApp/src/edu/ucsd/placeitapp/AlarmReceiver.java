@@ -9,11 +9,15 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 /* 
- * For issuing an alarm, see setAlarm in PlaceIt. 
+ * This class what should happen if an alarm goes off. 
  */
 public class AlarmReceiver extends BroadcastReceiver {
 
 	@Override
+	/*
+	 * Upon receiving an alarm, determines which PlaceItset the alarm, 
+	 * enables that placeit, and enables location tracking for that placeit. 
+	 */
 	public void onReceive(Context context, Intent intent) {
 
 
