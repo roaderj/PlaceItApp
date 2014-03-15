@@ -49,6 +49,8 @@ public class EntityDb extends SQLiteOpenHelper {
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		db.execSQL("DROP TABLE IF EXISTS " + ENTITY_TABLE_NAME); 
+		db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME); 
 		// This database is only a cache for online data, so its upgrade policy
 		// is
 		// to simply to discard the data and start over
