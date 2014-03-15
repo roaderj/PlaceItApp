@@ -1,6 +1,7 @@
 package edu.ucsd.placeitapp.model;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Date;
 
 import android.location.Location;
@@ -39,7 +40,7 @@ public class PlaceItFactory {
 		case CATEGORICAL:
 		case CATEGORICAL_RECURRING:
 			String[] tags = data.getStringArray(PLACEIT_TAGS);
-			return new CategoricalPlaceIt(pID, title, description, tags,
+			return new CategoricalPlaceIt(pID, title, description, Arrays.asList(tags),
 					startTime, isRecurring, recurringInterval, isEnabled);
 		default:
 			return null;

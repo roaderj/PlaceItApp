@@ -16,9 +16,13 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
 
-
+/*
+ * Activity that contains tab fragments for displaying the pulled-down
+ * and active place-its. 
+ */
 public class ListViewActivity extends FragmentActivity implements ActionBar.TabListener, Observer {
 
+	//Observe the PlaceItList for changes
 	private Observable data = PlaceItList.getInstance();
 	
 	private ViewPager viewPager;
@@ -108,11 +112,15 @@ public class ListViewActivity extends FragmentActivity implements ActionBar.TabL
 	}
 
 
+	//Map button click action
 	public void goToMap(View view) {
 		Intent intent = new Intent(this, MapActivity.class);
 		startActivity(intent);
 	}
 	
+	/*
+	 * Back button click action
+	 */
 	public void goBack(View view) {
 		finish(); 
 	}

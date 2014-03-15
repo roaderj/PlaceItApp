@@ -15,15 +15,16 @@ import android.location.LocationManager;
 public class LocationPlaceIt extends PlaceIt {
 
 	private Location location;
+	public static final String KEY = "LocationPlaceIt";
 
 	public LocationPlaceIt(int id, String title, String description, Location location,
 			Timestamp startTime, boolean isRecurring,
 			int recurringIntervalWeeks, boolean isEnabled) {
 		
 		//super needs to be changed in the future
-		super(id, title, description, location, startTime, isRecurring, recurringIntervalWeeks, isEnabled);
+		super(id, title, description, startTime, isRecurring, recurringIntervalWeeks, isEnabled);
 		this.location = location; 
-		
+		this.key = KEY;
 	}
 	
 	public LocationPlaceIt() {
@@ -41,8 +42,6 @@ public class LocationPlaceIt extends PlaceIt {
 
 	@Override
 	public void trackLocation(Context context, boolean enable) {
-
-		/* Directly copied from PlaceIt */
 
 		int pID = this.getId();
 		Intent locationIntent = new Intent(context,

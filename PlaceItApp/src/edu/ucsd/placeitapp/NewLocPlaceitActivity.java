@@ -15,15 +15,19 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-public class NewPlaceitActivity extends Activity {
+/* 
+ * Activity for creating a location place-it. 
+ */
+public class NewLocPlaceitActivity extends Activity {
 
 	private Location location;
+	//Factory to handle PlaceIt creation
 	PlaceItFactory factory; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_placeit);
+		setContentView(R.layout.activity_new_location_placeit);
 		// get the location
 		Intent intent = getIntent();
 		location = new Location("map");
@@ -53,6 +57,7 @@ public class NewPlaceitActivity extends Activity {
 		EditText editName = (EditText) findViewById(R.id.editName);
 		EditText editDes = (EditText) findViewById(R.id.editDes);
 		EditText editTime = (EditText) findViewById(R.id.editTime);
+		
 		AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
 		// name empty error
 		if (editName.getText().length() == 0) {
@@ -87,6 +92,7 @@ public class NewPlaceitActivity extends Activity {
 			}
 		}
 		
+		//Bundle data and create
 		factoryData.putString(PlaceItFactory.PLACEIT_TITLE, name); 
 		factoryData.putString(PlaceItFactory.PLACEIT_DESCRIPTION, des); 
 		factoryData.putBoolean(PlaceItFactory.PLACEIT_IS_RECURRING, check.isChecked());
@@ -96,6 +102,7 @@ public class NewPlaceitActivity extends Activity {
 
 		PlaceIt placeit = factory.create(PlaceIts.LOCATION, factoryData); 
 
+		PlaceItList.save(placeit); 
 		PlaceItList.save(placeit); 
 		placeit.setAlarm(this.getApplicationContext(), true);
 

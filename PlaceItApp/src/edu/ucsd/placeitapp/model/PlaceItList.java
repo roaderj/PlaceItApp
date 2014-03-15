@@ -47,7 +47,7 @@ public class PlaceItList extends Observable {
 	}
 
 	public static void save(PlaceIt p) {
-		int pID = PlaceItDBHelper.getInstance().save(p);
+		int pID = PlaceItDb.getInstance().save(p);
 		p.setId(pID);
 
 		updateList();
@@ -59,7 +59,7 @@ public class PlaceItList extends Observable {
 		p.trackLocation(context, false);
 		p.setAlarm(context, false);
 		PlaceItNotification.cancel(context, p.getId()); 
-		PlaceItDBHelper.getInstance().delete(p);
+		PlaceItDb.getInstance().delete(p);
 		p.setId(-1);
 
 		updateList();
@@ -67,15 +67,19 @@ public class PlaceItList extends Observable {
 	}
 
 	public static PlaceIt find(int id) {
-		return PlaceItDBHelper.getInstance().find(id);
+		return PlaceItDb.getInstance().find(id);
 	}
 
 	public static List<PlaceIt> all() {
 		return placeIts;
 	}
+	
+	public static List<PlaceIt> all(String key) {
+		return PlaceItDb.getInstance().all(key);
+	}
 
 	private static void updateList() {
-		placeIts = PlaceItDBHelper.getInstance().all();
+		placeIts = PlaceItDb.getInstance().all();
 	}
 
 }

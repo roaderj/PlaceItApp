@@ -9,6 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+/* 
+ * Tab manager. Creates a tab with specific data. 
+ */
 public class ListViewAdapter extends FragmentPagerAdapter {
 
 	List<PlaceIt> placeIts;
@@ -27,6 +30,7 @@ public class ListViewAdapter extends FragmentPagerAdapter {
 			ListTabFragment activeTab = new ListTabFragment(getActive());
 			return activeTab;
 		case 1:
+			// pulled-down fragment activity
 			ListTabFragment pulledDownTab = new ListTabFragment(getPulledDown());
 			return pulledDownTab;
 		}
@@ -39,6 +43,9 @@ public class ListViewAdapter extends FragmentPagerAdapter {
 		return 2;
 	}
 	
+	/*
+	 * Get active data for fragment
+	 */
 	private List<PlaceIt> getActive() {
 		List<PlaceIt> activeList = new ArrayList<PlaceIt>(); 
 		for (PlaceIt placeIt : placeIts) {
@@ -48,6 +55,9 @@ public class ListViewAdapter extends FragmentPagerAdapter {
 		return activeList; 
 	}
 	
+	/*
+	 * Get pulled down data for fragment. 
+	 */
 	private List<PlaceIt> getPulledDown() {
 		List<PlaceIt> pulledDown = new ArrayList<PlaceIt>(); 
 		for (PlaceIt placeIt : placeIts) {
