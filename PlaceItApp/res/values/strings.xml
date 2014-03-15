@@ -36,5 +36,6 @@
     <string name="login">Log-in</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="pass_confirm">Confirm Password</string>
+    <string name="title_activity_fake_testing">FakeTestingActivity</string>
 
 </resources>
