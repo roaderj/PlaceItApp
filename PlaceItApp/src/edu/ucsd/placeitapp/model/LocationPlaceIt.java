@@ -27,6 +27,10 @@ public class LocationPlaceIt extends PlaceIt {
 		this.key = KEY;
 	}
 	
+	public LocationPlaceIt(String title, String description, Location location) {
+		this(0, title, description, location, null, false, 0, false);
+	}
+	
 	public LocationPlaceIt() {
 		this(0, "", "", null, null, false, 0, false);
 	}

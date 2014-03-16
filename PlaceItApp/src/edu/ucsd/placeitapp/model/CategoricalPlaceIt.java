@@ -27,6 +27,10 @@ public class CategoricalPlaceIt extends PlaceIt {
 		this.key = KEY;
 	}
 	
+	public CategoricalPlaceIt(String title, String description, List<String> tags) {
+		this(0, title, description, tags, null, false, 0, false);
+	}
+	
 	public CategoricalPlaceIt() {
 		this(0, "", "", new ArrayList<String>(), null, false, 0, false);
 	}
