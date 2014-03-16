@@ -49,7 +49,9 @@ public class PlaceItList extends Observable {
 	public static void save(PlaceIt p) {
 		int pID = PlaceItDb.getInstance().save(p);
 		p.setId(pID);
+		PlaceItDb.getInstance().save(p);
 
+		
 		updateList();
 		getInstance().notifyObservers();
 
