@@ -15,13 +15,9 @@ public class PlaceItSerializationTest extends AndroidTestCase {
 	PlaceIt placeIt;
 
 	public void setUp() {
-//		PlaceItDb.setInstance(new RenamingDelegatingContext(getContext(),
-//				"test_"));
+		EntityDb.setInstance(new RenamingDelegatingContext(getContext(),
+				"test_"));
 		PlaceItList.setInstance(new RenamingDelegatingContext(getContext(), "test_")); 
-		Location location = new Location("network");
-		location.setLatitude(123.4);
-		location.setLongitude(567.8);
-		placeIt = new PlaceIt("Test Title", "Test Description");
 	}
 
 	public void tearDown() {

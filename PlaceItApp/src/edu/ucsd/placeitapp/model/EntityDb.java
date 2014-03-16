@@ -27,7 +27,7 @@ public class EntityDb extends SQLiteOpenHelper {
 	public static final String USER_LOGGED_IN_COLUMN = "loggedin"; 
 	public static final String USER_PASSWORD_COLUMN = "password"; 
 	
-	public static final int DATABASE_VERSION = 3;
+	public static final int DATABASE_VERSION = 2;
 	public static final String DATABASE_NAME = "Entity.db";
 
 	private EntityDb(Context context) {

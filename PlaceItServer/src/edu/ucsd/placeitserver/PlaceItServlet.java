@@ -1,4 +1,3 @@
-
 package edu.ucsd.placeitserver;
 
 import java.io.IOException;
@@ -14,58 +13,66 @@ import com.google.appengine.api.datastore.Entity;
 @SuppressWarnings("serial")
 public class PlaceItServlet extends BaseServlet {
 
-  private static final Logger logger = Logger.getLogger(PlaceItServlet.class.getCanonicalName());
+	private static final Logger logger = Logger.getLogger(PlaceItServlet.class
+			.getCanonicalName());
 
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 
-    super.doGet(req, resp);
-    logger.log(Level.INFO, "Obtaining PlaceIt listing");
-    String searchBy = req.getParameter("placeit-searchby");
-    String searchFor = req.getParameter("q");
-    PrintWriter out = resp.getWriter();
-    if (searchFor == null || searchFor.equals("")) {
-      Iterable<Entity> entities = PlaceIt.getAllPlaceIt();
-      out.println(Util.writeJSON(entities));
-    } else if (searchBy == null || searchBy.equals("Name")) {
-      Iterable<Entity> entities = PlaceIt.getPlaceIt(searchFor);
-      out.println(Util.writeJSON(entities));
-    } else if (searchBy != null && searchBy.equals("User")) {
-      Iterable<Entity> entities = PlaceIt.getPlaceItForUser("PlaceIt", searchFor);
-      out.println(Util.writeJSON(entities));
-    }
-  }
+		super.doGet(req, resp);
+		logger.log(Level.INFO, "Obtaining PlaceIt listing");
+		
+		String searchByUser = req.getParameter("username"); //Get listings for a user
+		String searchForSingle = req.getParameter("identifier"); //Get a single placeit
+		
+		PrintWriter out = resp.getWriter();
+		Iterable<Entity> entities; 
+		if (searchByUser == null || searchByUser == "") {
+			if (searchForSingle == null || searchForSingle == "") {
+				//Get all placeits
+				entities = PlaceIt.getAllPlaceIt(); 
+			} else {
+				//Get the single placeit requested
+				entities = PlaceIt.getPlaceIt(searchForSingle); 
+			}
+		} else {
+			//Get the user's placeits 
+			entities = PlaceIt.getPlaceItForUser(searchByUser);
+		}
+		
+		out.println(Util.writeJSON(entities));
+	}
 
-  protected void doPut(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    logger.log(Level.INFO, "Creating PlaceIt");
-    String placeitName = req.getParameter("Name");
-    String userName = req.getParameter("User");
-    String placeitdata = req.getParameter("Data");
-    PlaceIt.createOrUpdatePlaceIt(userName, placeitName, placeitdata);
-  }
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		logger.log(Level.INFO, "Creating PlaceIt");
+		String identifier = req.getParameter("identifier");
+		String userName = req.getParameter("User");
+		String placeitdata = req.getParameter("Data");
+		PlaceIt.createOrUpdatePlaceIt(identifier, userName, placeitdata);
+	}
 
-  protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    String placeitKey = req.getParameter("id");
-    PrintWriter out = resp.getWriter();
-    try{      
-      out.println(PlaceIt.deletePlaceIt(placeitKey));
-    } catch(Exception e) {
-      out.println(Util.getErrorMessage(e));
-    }      
-    
-  }
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String placeitKey = req.getParameter("identifier");
+		PrintWriter out = resp.getWriter();
+		try {
+			out.println(PlaceIt.deletePlaceIt(placeitKey));
+		} catch (Exception e) {
+			out.println(Util.getErrorMessage(e));
+		}
 
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    String action = req.getParameter("action");
-    if (action.equalsIgnoreCase("delete")) {
-      doDelete(req, resp);
-      return;
-    } else if (action.equalsIgnoreCase("put")) {
-      doPut(req, resp);
-      return;
-    }
-  }
+	}
+
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String action = req.getParameter("action");
+		if (action.equalsIgnoreCase("delete")) {
+			doDelete(req, resp);
+			return;
+		} else if (action.equalsIgnoreCase("put")) {
+			doPut(req, resp);
+			return;
+		}
+	}
 }
