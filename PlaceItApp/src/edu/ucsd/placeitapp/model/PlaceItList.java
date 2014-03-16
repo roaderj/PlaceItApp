@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import edu.ucsd.placeitapp.PlaceItNotification;
+import edu.ucsd.placeitapp.SyncClient;
 import android.content.Context;
 
 public class PlaceItList extends Observable {
@@ -26,6 +27,7 @@ public class PlaceItList extends Observable {
 	public void notifyObservers() {
 		for (Observer o : observers)
 			o.update(this, null);
+		
 	}
 
 	@Override
@@ -49,13 +51,15 @@ public class PlaceItList extends Observable {
 	public static void save(PlaceIt p) {
 		int pID = PlaceItDb.getInstance().save(p);
 		p.setId(pID);
-
+		SyncClient.pushPlaceIt(p); 
+		
 		updateList();
 		getInstance().notifyObservers();
-
 	}
 
 	public static void delete(PlaceIt p) {
+		SyncClient.deletePlaceIt(p); 
+
 		p.trackLocation(context, false);
 		p.setAlarm(context, false);
 		PlaceItNotification.cancel(context, p.getId()); 

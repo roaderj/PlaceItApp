@@ -19,16 +19,17 @@ import android.view.View;
 public class MainMenuActivity extends Activity {
 
 	Intent checker;
+	Intent syncing; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		//EntityDb.setInstance(this.getApplicationContext()); Moved to MainActivity
-		PlaceItList.setInstance(this.getApplicationContext());
 		checker = new Intent(this, PlaceItCheckService.class);
 		startService(checker);
+		syncing = new Intent(this, PlaceItSyncingService.class); 
+		startService(syncing); 
 	}
 
 	@Override
@@ -66,8 +67,6 @@ public class MainMenuActivity extends Activity {
 	 * Logout button click action
 	 */
 	public void logOut(View v) {
-
-		//TODO: push all changes to the server
 		PlaceItDb instance = PlaceItDb.getInstance();
 		List<PlaceIt> placeIts = PlaceItList.all(); 
 		for (PlaceIt placeIt : placeIts) {
@@ -76,12 +75,14 @@ public class MainMenuActivity extends Activity {
 			//disable all alarms
 			placeIt.setAlarm(this, false);
 			//drop the current table
-			instance.delete(placeIt);
+			//instance.delete(placeIt);
 		}
 		//disable the current user
 		SyncClient.logOut();
 		//stop checking for Categorical
 		stopService(checker);
+		//stop syncing
+		stopService(syncing); 
 		//return to login window
 		Intent returnSignUp = new Intent(this, MainActivity.class); 
 		startActivity(returnSignUp); 

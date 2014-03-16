@@ -46,6 +46,9 @@ public class MainActivity extends Activity {
 		
 		//If a user is logged-in, go to Main Menu Window
 		if (EntityDb.getInstance().getLoggedInUser() != null) {
+			PlaceItList.setInstance(currentActivity);
+			SyncClient.sync(currentActivity); 
+			
 			Intent cachedUser = new Intent(this, MainMenuActivity.class); 
 			startActivity(cachedUser); 
 			finish(); 
@@ -94,7 +97,10 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(Boolean isValid) {
 			progressDialog.dismiss();
 			if (isValid) {
-				Toast.makeText(currentActivity, "Welcome!", Toast.LENGTH_SHORT).show(); 
+				Toast.makeText(currentActivity, "Welcome!", Toast.LENGTH_SHORT).show();
+				
+				PlaceItList.setInstance(currentActivity);
+				
 				Intent intent = new Intent(currentActivity, MainMenuActivity.class); 
 				startActivity(intent); 
 				finish(); 

@@ -19,11 +19,11 @@ public class PlaceItDb {
 	private PlaceItDb() {
 	}
 	
-	private PlaceIt deserialize(String json) {
+	public PlaceIt deserialize(String json) {
 		// hack city; make it check for PlaceIt key instead in the future possibly
 		PlaceIt placeIt = null;
 		Gson gson = new Gson();
-		if (json.contains("mElapsedRealtimeNanos")) {
+		if (json.contains(LocationPlaceIt.KEY)) {
 			placeIt = gson.fromJson(json, LocationPlaceIt.class);
 		} else {
 			placeIt = gson.fromJson(json, CategoricalPlaceIt.class);
@@ -32,7 +32,7 @@ public class PlaceItDb {
 		return placeIt;
 	}
 	
-	private String serialize(PlaceIt placeIt) {
+	public String serialize(PlaceIt placeIt) {
 		Gson gson = new Gson();
 		return gson.toJson(placeIt);
 	}

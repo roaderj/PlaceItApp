@@ -1,5 +1,7 @@
 package edu.ucsd.placeitapp;
 
+import java.util.List;
+
 import edu.ucsd.placeitapp.model.PlaceIt;
 import edu.ucsd.placeitapp.model.PlaceItFactory;
 import edu.ucsd.placeitapp.model.PlaceItList;
@@ -23,6 +25,7 @@ public class NewLocPlaceitActivity extends Activity {
 	private Location location;
 	//Factory to handle PlaceIt creation
 	PlaceItFactory factory; 
+	PlaceIt placeit; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +103,7 @@ public class NewLocPlaceitActivity extends Activity {
 		factoryData.putDouble(PlaceItFactory.PLACEIT_LONGITUDE, location.getLongitude()); 
 		factoryData.putDouble(PlaceItFactory.PLACEIT_LATITUDE, location.getLatitude()); 
 
-		PlaceIt placeit = factory.create(PlaceIts.LOCATION, factoryData); 
+		placeit = factory.create(PlaceIts.LOCATION, factoryData); 
 
 		PlaceItList.save(placeit); 
 		PlaceItList.save(placeit); 
