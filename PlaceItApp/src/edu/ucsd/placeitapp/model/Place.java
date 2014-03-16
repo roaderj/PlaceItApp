@@ -6,6 +6,9 @@ import java.util.logging.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/*
+ * Places class which the JSON from google Places API will be parsed into.
+ */
 public class Place {
     private String id;
     private String icon;
@@ -61,18 +64,18 @@ public class Place {
     public void setVicinity(String vicinity) {
         this.vicinity = vicinity;
     }
-
-    static Place jsonToPontoReferencia(JSONObject pontoReferencia) {
+    //parse the JSON to Place
+    static Place JSONToReference(JSONObject json) {
         try {
             Place result = new Place();
-            JSONObject geometry = (JSONObject) pontoReferencia.get("geometry");
+            JSONObject geometry = (JSONObject) json.get("geometry");
             JSONObject location = (JSONObject) geometry.get("location");
             result.setLatitude((Double) location.get("lat"));
             result.setLongitude((Double) location.get("lng"));
-            result.setIcon(pontoReferencia.getString("icon"));
-            result.setName(pontoReferencia.getString("name"));
-            result.setVicinity(pontoReferencia.getString("vicinity"));
-            result.setId(pontoReferencia.getString("id"));
+            result.setIcon(json.getString("icon"));
+            result.setName(json.getString("name"));
+            result.setVicinity(json.getString("vicinity"));
+            result.setId(json.getString("id"));
             return result;
         } catch (JSONException ex) {
             

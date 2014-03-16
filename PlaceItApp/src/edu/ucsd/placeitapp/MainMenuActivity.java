@@ -1,7 +1,6 @@
 package edu.ucsd.placeitapp;
 
 
-import edu.ucsd.placeitapp.model.CategoryChecker;
 import java.util.List;
 
 import edu.ucsd.placeitapp.model.PlaceIt;
@@ -26,6 +25,7 @@ public class MainMenuActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		//start background services
 		checker = new Intent(this, PlaceItCheckService.class);
 		startService(checker);
 		syncing = new Intent(this, PlaceItSyncingService.class); 

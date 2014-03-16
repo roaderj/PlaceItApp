@@ -80,7 +80,14 @@ public class PlaceItList extends Observable {
 	}
 	
 	public static List<PlaceIt> all(String key) {
-		return PlaceItDb.getInstance().all(key);
+		List<PlaceIt> filtedPlaceIts = new ArrayList<PlaceIt>();
+		for (PlaceIt placeIt : placeIts) {
+			if (placeIt.getKey().equals(key)) {
+				filtedPlaceIts.add(placeIt);
+			}
+		}
+		
+		return filtedPlaceIts;
 	}
 
 	private static void updateList() {

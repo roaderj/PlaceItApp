@@ -1,12 +1,14 @@
 package edu.ucsd.placeitapp.test;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.location.Location;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import edu.ucsd.placeitapp.*;
+import edu.ucsd.placeitapp.model.CategoricalPlaceIt;
 import edu.ucsd.placeitapp.model.EntityDb;
 import edu.ucsd.placeitapp.model.LocationPlaceIt;
 import edu.ucsd.placeitapp.model.PlaceIt;
@@ -21,6 +23,54 @@ public class PlaceItTest extends AndroidTestCase {
 
 	public void tearDown() {
 		EntityDb.getInstance().close();
+	}
+	
+	public void testMultiClassSaving() {
+		Location location = new Location("network");
+		location.setLatitude(123);
+		location.setLongitude(456);
+		ArrayList<String> tags = new ArrayList<String>();
+		tags.add("TEST_TAG1");
+		tags.add("TEST_TAG2");
+		
+		for (int i = 1; i <= 20; ++i) {
+			PlaceIt placeIt = null;
+			if (i % 2 == 0) {
+				placeIt = new LocationPlaceIt("title", "desc", location);
+			} else {
+				placeIt = new CategoricalPlaceIt("title", "desc", tags);
+			}
+			
+			PlaceItList.save(placeIt);
+		}
+		
+		@SuppressWarnings("unused")
+		List<PlaceIt> placeIts = PlaceItList.all();
+		
+		assertEquals(PlaceItList.all(LocationPlaceIt.KEY).size(), 10);
+		for (PlaceIt placeIt : PlaceItList.all(LocationPlaceIt.KEY)){
+			assertTrue(placeIt instanceof LocationPlaceIt);
+		}
+		
+		assertEquals(PlaceItList.all(CategoricalPlaceIt.KEY).size(), 10);
+		for (PlaceIt placeIt : PlaceItList.all(CategoricalPlaceIt.KEY)){
+			assertTrue(placeIt instanceof CategoricalPlaceIt);
+		}
+		
+		assertEquals(PlaceItList.all().size(), 20);
+		for (int i = 1; i <= 20; ++i) {
+			PlaceIt placeIt = PlaceItList.find(i);
+			if (i % 2 == 0) {
+				assertTrue(placeIt instanceof LocationPlaceIt);
+				LocationPlaceIt locationPlaceIt = (LocationPlaceIt)placeIt;
+				assertEquals(locationPlaceIt.getLocation().getLongitude(), location.getLongitude());
+				assertEquals(locationPlaceIt.getLocation().getLatitude(), location.getLatitude());
+			} else {
+				assertTrue(placeIt instanceof CategoricalPlaceIt);
+				CategoricalPlaceIt categoricalPlaceIt = (CategoricalPlaceIt)placeIt;
+				assertEquals(categoricalPlaceIt.getTags(), tags);
+			}
+		}
 	}
 
 	public void testSave() {
