@@ -267,11 +267,7 @@ public class SyncClient {
 					}
 
 				}
-//				for (PlaceIt i : fromUpStream) {
-//					for (PlaceIt j : currentList)
-//						if (i.equals(j))
-//							Log.d(TAG, "A Match!"); 
-//				}
+
 			}
 		};
 		t.start();

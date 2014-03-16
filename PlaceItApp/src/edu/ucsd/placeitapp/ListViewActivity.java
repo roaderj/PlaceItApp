@@ -128,14 +128,12 @@ public class ListViewActivity extends FragmentActivity implements ActionBar.TabL
 	@Override
 	public void update(Observable observable, Object data) {
 		//Inefficient
-		startActivity(getIntent());
 		finish();
+		Intent i = new Intent(this,ListViewActivity.class);
+		startActivity(i);
+		
+		
 	}
 	
 
 }
-
-
-
-
-
