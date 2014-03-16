@@ -25,6 +25,7 @@ public class MainMenuActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		//start background services
 		checker = new Intent(this, PlaceItCheckService.class);
 		startService(checker);
 		syncing = new Intent(this, PlaceItSyncingService.class); 
