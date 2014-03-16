@@ -13,6 +13,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Location;
 import android.util.Log;
 
+/* 
+ * General purpose SQLite database wrapper for storing key value pairs.
+ */
 public class EntityDb extends SQLiteOpenHelper {
 	private static EntityDb instance;
 

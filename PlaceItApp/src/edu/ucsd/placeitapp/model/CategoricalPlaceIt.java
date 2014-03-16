@@ -7,8 +7,9 @@ import java.util.List;
 import android.content.Context;
 import android.location.Location;
 
-/* Needs PlaceItDBHelper to be fully functional */ 
-
+/* 
+ * Subclass of PlaceIt for categories.
+ */
 public class CategoricalPlaceIt extends PlaceIt {
 	
 	private String address;

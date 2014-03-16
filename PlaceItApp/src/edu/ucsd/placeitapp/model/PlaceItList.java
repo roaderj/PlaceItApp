@@ -9,6 +9,9 @@ import edu.ucsd.placeitapp.PlaceItNotification;
 import edu.ucsd.placeitapp.SyncClient;
 import android.content.Context;
 
+/* 
+ * Observable PlaceIt collection for Activities and other entities to monitor.
+ */
 public class PlaceItList extends Observable {
 
 	public static List<PlaceIt> placeIts;

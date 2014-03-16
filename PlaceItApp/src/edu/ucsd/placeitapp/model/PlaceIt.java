@@ -13,6 +13,9 @@ import android.content.Intent;
 import edu.ucsd.placeitapp.AlarmReceiver;
 import edu.ucsd.placeitapp.MainActivity;
 
+/* 
+ * Base PlaceIt model containing common attributes such as title, description, and start time. 
+ */
 public abstract class PlaceIt {
 	private int id;
 	private String title;

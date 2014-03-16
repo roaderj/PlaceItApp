@@ -7,6 +7,9 @@ import java.util.Date;
 import android.location.Location;
 import android.os.Bundle;
 
+/* 
+ * Class to encapsulates the logic for creating various PlaceIt instances.
+ */
 public class PlaceItFactory {
 	public static final String PLACEIT_ID = "id";
 	public static final String PLACEIT_TITLE = "title";

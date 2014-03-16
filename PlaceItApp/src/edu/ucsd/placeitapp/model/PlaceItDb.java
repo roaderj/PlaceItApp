@@ -13,6 +13,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Location;
 
+/* 
+ * Class that utilizes EntityDb to store PlaceIts in JSON format.
+ */
 public class PlaceItDb {
 	private static PlaceItDb instance;
 

@@ -11,7 +11,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 
-/* Needs PlaceItDBHelper to be fully functional */ 
+/* 
+ * Subclass of PlaceIts that are location aware. 
+ */
 public class LocationPlaceIt extends PlaceIt {
 
 	private double latitude;
