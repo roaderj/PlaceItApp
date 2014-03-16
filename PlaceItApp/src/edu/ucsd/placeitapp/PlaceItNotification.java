@@ -1,5 +1,7 @@
 package edu.ucsd.placeitapp;
 
+import edu.ucsd.placeitapp.model.CategoricalPlaceIt;
+import edu.ucsd.placeitapp.model.LocationPlaceIt;
 import edu.ucsd.placeitapp.model.PlaceIt;
 import edu.ucsd.placeitapp.model.PlaceItList;
 import android.app.Notification;
@@ -36,12 +38,19 @@ public class PlaceItNotification extends BroadcastReceiver {
 
 		PlaceIt placeIt = PlaceItList.find(pID);
 		final String title = placeIt.getTitle();
-		final String description = placeIt.getDescription();
+		//address for Categorical, Location cordinate for regular
+		String address = placeIt.getDescription();
+		if(placeIt.getClass() == CategoricalPlaceIt.class){
+			address = ((CategoricalPlaceIt) placeIt).getAddress();
+		}
+		else{
+			address = "" +  ((LocationPlaceIt) placeIt).getLocation().getLatitude() + ((LocationPlaceIt) placeIt).getLocation().getLongitude();
+		}
 
 		final String fullTitle = res.getString(
 				R.string.place_it_notification_title_template, title);
-		final String fullDescription = res.getString(
-				R.string.place_it_notification_text_template, description);
+		final String fullAddress = res.getString(
+				R.string.place_it_notification_text_template, address);
 
 		final NotificationCompat.Builder notification = new NotificationCompat.Builder(
 				context);
@@ -53,7 +62,7 @@ public class PlaceItNotification extends BroadcastReceiver {
 		// required values
 		notification.setSmallIcon(R.drawable.ic_launcher);
 		notification.setContentTitle(fullTitle);
-		notification.setContentText(fullDescription);
+		notification.setContentText(fullAddress);
 
 		// Set preview information for this notification.
 		notification.setTicker(title);

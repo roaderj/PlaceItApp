@@ -11,8 +11,10 @@ import android.location.Location;
 
 public class CategoricalPlaceIt extends PlaceIt {
 	
+	private String address;
 	private List<String> tags; 
 	public static final String KEY = "CategoricalPlaceIt";
+	
 	
 	public CategoricalPlaceIt(int id, String title, String description, List<String> tags,
 			Timestamp startTime, boolean isRecurring,
@@ -41,9 +43,16 @@ public class CategoricalPlaceIt extends PlaceIt {
 		return this.tags; 
 	}
 	
+	public void setAddress(String address){
+		this.address = address;
+	}
+	
+	public String getAddress(){
+		return address;
+	}
 	@Override
 	public void trackLocation(Context context, boolean enable) {
-		//TODO 
+		setEnabled(enable);
 	}
 	
 	public String toString() {

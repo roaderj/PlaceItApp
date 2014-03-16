@@ -14,7 +14,7 @@
     <string name="help">help</string>
     <string name="back">back</string>
     <string name="place_it_notification_title_template">Place it: %1$s</string>
-    <string name="place_it_notification_text_template">Description: %1$s</string>
+    <string name="place_it_notification_text_template">Address: %1$s</string>
     <string name="notification_repost">Repost</string>
     <string name="notification_discard">Discard</string>
     <string name="newplaceit">New Place-It</string>

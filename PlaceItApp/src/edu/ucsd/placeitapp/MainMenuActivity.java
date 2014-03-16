@@ -1,5 +1,6 @@
 package edu.ucsd.placeitapp;
 
+import edu.ucsd.placeitapp.model.CategoryChecker;
 import edu.ucsd.placeitapp.model.PlaceItList;
 import android.os.Bundle;
 import android.app.Activity;
@@ -12,13 +13,17 @@ import android.view.View;
  */
 public class MainMenuActivity extends Activity {
 
+	Intent checker;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		//EntityDb.setInstance(this.getApplicationContext()); Moved to MainActivity
-		PlaceItList.setInstance(this.getApplicationContext()); 
+		PlaceItList.setInstance(this.getApplicationContext());
+		checker = new Intent(this, PlaceItCheckService.class);
+		startService(checker);
 	}
 
 	@Override
@@ -56,7 +61,8 @@ public class MainMenuActivity extends Activity {
 	 * Logout button click action
 	 */
 	public void logOut(View v) {
-		SyncClient.logOut(); 
+		SyncClient.logOut();
+		stopService(checker);
 		//return to login window
 		Intent returnSignUp = new Intent(this, MainActivity.class); 
 		startActivity(returnSignUp); 
