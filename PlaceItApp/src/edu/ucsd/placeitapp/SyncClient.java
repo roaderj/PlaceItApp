@@ -242,6 +242,9 @@ public class SyncClient {
 
 				for (PlaceIt p : fromUpStream) {
 					idValues.add(p.getId()); 
+					//descriptions.add(p.toString()); 
+				}
+				for (PlaceIt p : currentList) {
 					descriptions.add(p.toString()); 
 				}
 				
@@ -264,6 +267,11 @@ public class SyncClient {
 					}
 
 				}
+//				for (PlaceIt i : fromUpStream) {
+//					for (PlaceIt j : currentList)
+//						if (i.equals(j))
+//							Log.d(TAG, "A Match!"); 
+//				}
 			}
 		};
 		t.start();
