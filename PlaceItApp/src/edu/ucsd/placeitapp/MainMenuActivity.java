@@ -1,7 +1,6 @@
 package edu.ucsd.placeitapp;
 
 
-import edu.ucsd.placeitapp.model.CategoryChecker;
 import java.util.List;
 
 import edu.ucsd.placeitapp.model.PlaceIt;

@@ -56,6 +56,7 @@ public class CategoricalPlaceIt extends PlaceIt {
 	}
 	@Override
 	public void trackLocation(Context context, boolean enable) {
+		//if enable, check for location.
 		setEnabled(enable);
 	}
 	
