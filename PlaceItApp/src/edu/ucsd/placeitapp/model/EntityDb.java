@@ -61,6 +61,14 @@ public class EntityDb extends SQLiteOpenHelper {
 		onUpgrade(db, oldVersion, newVersion);
 	}
 
+	public void resetDB() {
+		SQLiteDatabase db = getWritableDatabase(); 
+		db.execSQL("DROP TABLE IF EXISTS " + ENTITY_TABLE_NAME);
+		db.execSQL("CREATE TABLE " + ENTITY_TABLE_NAME + " ("
+				+ ENTITY_ID_COLUMN_NAME + " INTEGER PRIMARY KEY,"
+				+ ENTITY_KEY_COLUMN_NAME + " TEXT," + ENTITY_VALUE_COLUMN_NAME
+				+ " TEXT" + ");");
+	}
 	public boolean exists(int id) {
 		return find(id) != null;
 	}

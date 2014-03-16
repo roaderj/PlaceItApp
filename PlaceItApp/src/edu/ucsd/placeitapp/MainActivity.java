@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
 			progressDialog.dismiss();
 			if (isValid) {
 				Toast.makeText(currentActivity, "Welcome!", Toast.LENGTH_SHORT).show();
-				
+				EntityDb.getInstance().resetDB(); 
 				PlaceItList.setInstance(currentActivity);
 				
 				Intent intent = new Intent(currentActivity, MainMenuActivity.class); 
