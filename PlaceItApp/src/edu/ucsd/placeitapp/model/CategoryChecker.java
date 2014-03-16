@@ -13,9 +13,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-
+/*
+ * Sends JSON request to Google Places API
+ */
 public class CategoryChecker {
-
+	//Radius to check in meters
 	private final int RADIUS = 805; // 0.5mile
 	
 	private String API_KEY;
@@ -28,6 +30,7 @@ public class CategoryChecker {
 		this.API_KEY = apikey;
 	}
 
+	//find places from given latitude and longitude
 	public ArrayList<Place> findPlaces(double latitude, double longitude,
 			String placeSpacification) {
 
@@ -44,7 +47,7 @@ public class CategoryChecker {
 			for (int i = 0; i < array.length(); i++) {
 				try {
 					Place place = Place
-							.jsonToPontoReferencia((JSONObject) array.get(i));
+							.JSONToReference((JSONObject) array.get(i));
 					arrayList.add(place);
 				} catch (Exception e) {
 				}
@@ -55,11 +58,13 @@ public class CategoryChecker {
 		return null;
 	}
 
-
+	//Create JSON request URL
 	private String makeUrl(double latitude, double longitude, String place) {
 		StringBuilder urlString = new StringBuilder(
 				"https://maps.googleapis.com/maps/api/place/search/json?");
 
+		//just in case when no place specified place comes through
+		// result will be no result.
 		if (place.equals("")) {
 			urlString.append("&location=");
 			urlString.append(Double.toString(latitude));
@@ -67,7 +72,6 @@ public class CategoryChecker {
 			urlString.append(Double.toString(longitude));
 			urlString.append("&radius=");
 			urlString.append(RADIUS);
-			// urlString.append("&types="+place);
 			urlString.append("&sensor=false&key=" + API_KEY);
 		} else {
 			urlString.append("&location=");

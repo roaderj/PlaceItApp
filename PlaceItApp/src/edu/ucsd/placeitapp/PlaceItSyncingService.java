@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class PlaceItSyncingService extends Service {
 	
-	private static final long INTERVAL = 15000; // 15000ms
+	private static final long INTERVAL = 20000; // 15000ms
 	private long prevTime; 
 	
 	Context serviceContext; 
