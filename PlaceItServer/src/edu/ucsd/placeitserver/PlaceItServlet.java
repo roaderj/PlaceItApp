@@ -9,13 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.datastore.Entity;
-
+/**
+ * This servlet responds to the request corresponding to PlaceIt data. 
+ */
 @SuppressWarnings("serial")
 public class PlaceItServlet extends BaseServlet {
 
 	private static final Logger logger = Logger.getLogger(PlaceItServlet.class
 			.getCanonicalName());
-
+	 /**
+	   * Searches for the entity based on the search criteria and returns result in
+	   */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
@@ -42,7 +46,9 @@ public class PlaceItServlet extends BaseServlet {
 		
 		out.println(Util.writeJSON(entities));
 	}
-
+	/**
+	  * Creates entity and persists the same
+	  */
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		logger.log(Level.INFO, "Creating PlaceIt");
@@ -51,7 +57,9 @@ public class PlaceItServlet extends BaseServlet {
 		String placeitdata = req.getParameter("Data");
 		PlaceIt.createOrUpdatePlaceIt(identifier, userName, placeitdata);
 	}
-
+	/**
+	  * Delete the entity
+	  */
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String placeitKey = req.getParameter("identifier");
@@ -63,7 +71,10 @@ public class PlaceItServlet extends BaseServlet {
 		}
 
 	}
-
+	/**
+	  * Redirects to delete or insert entity based on the action in the HTTP
+	  * request.
+	  */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String action = req.getParameter("action");

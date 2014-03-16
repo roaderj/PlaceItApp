@@ -152,7 +152,7 @@ public class PlaceItCheckService extends Service implements Observer, LocationLi
 						try {
 							ArrayList<Place> placeList = task.get();
 							Log.d("checker",""+placeList.size());
-							if(placeList != null){
+							if(placeList != null && placeList.size() != 0){
 								Log.d("checker",placeList.get(0).getVicinity());
 								p.setAddress(placeList.get(0).getVicinity());
 								CategoryReceiver.Found(context, p);
